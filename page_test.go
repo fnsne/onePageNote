@@ -30,6 +30,8 @@ var _ = Describe("Page", func() {
 		By("redirecting the user to the page view", func() {
 			Expect(page.Navigate(rootURL)).To(Succeed())
 			Expect(page.Title()).To(Equal("One Page Note"))
+			text, _ := page.Find("#noteTitle").Text()
+			Expect(text).To(Equal("Untitled"))
 		})
 	})
 })
