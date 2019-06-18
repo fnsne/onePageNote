@@ -26,12 +26,27 @@ var _ = Describe("Page", func() {
 	AfterEach(func() {
 		Expect(page.Destroy()).To(Succeed())
 	})
-	It("should show page view", func() {
-		By("redirecting the user to the page view", func() {
-			Expect(page.Navigate(rootURL)).To(Succeed())
-			Expect(page.Title()).To(Equal("One Page Note"))
-			text, _ := page.Find("#noteTitle").Text()
-			Expect(text).To(Equal("Untitled"))
+	Describe("note view", func() {
+		Context("Get home page", func() {
+			It("should have web title", func() {
+				Expect(page.Navigate(rootURL)).To(Succeed())
+				Expect(page.Title()).To(Equal("One Page Note"))
+			})
+			It("should have default note title", func() {
+				Expect(page.Navigate(rootURL)).To(Succeed())
+				text, _ := page.Find("#noteTitle").Text()
+				Expect(text).To(Equal("Untitled"))
+			})
+			It("can change note title by clicking and input", func() {
+				Expect(page.Navigate(rootURL)).To(Succeed())
+				noteTitle := page.Find("#noteTitle")
+				Expect(noteTitle.Click()).To(Succeed())
+				Expect(noteTitle.Fill("我的note")).To(Succeed())
+				noteTitleString, err := noteTitle.Text()
+				Expect(err).To(Succeed())
+				Expect(noteTitleString).To(Equal("我的note"))
+			})
 		})
+
 	})
 })
