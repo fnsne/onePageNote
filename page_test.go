@@ -6,6 +6,7 @@ import (
 	. "github.com/onsi/gomega"
 	"github.com/sclevine/agouti"
 	"net/http/httptest"
+	"os"
 	"time"
 )
 
@@ -17,6 +18,11 @@ var _ = Describe("Page", func() {
 		var err error
 		page, err = agoutiDriver.NewPage()
 		Expect(err).NotTo(HaveOccurred())
+
+		err = os.Remove("db.notes.json")
+		if err != nil {
+			fmt.Printf("err= %v", err)
+		}
 
 		onePageNoteServer := &OnePageNoteServer{}
 
@@ -38,10 +44,9 @@ var _ = Describe("Page", func() {
 				text, _ := page.Find("#noteTitle").Text()
 				Expect(text).To(Equal("Untitled"))
 			})
-			It("should have deafault date", func() {
+			It("should have default date", func() {
 				Expect(page.Navigate(rootURL)).To(Succeed())
 				expectDate := time.Now().Format("2006-01-02")
-				fmt.Println("==================expectDate = ", expectDate)
 				text, _ := page.Find("#noteDate").Text()
 				Expect(text).To(Equal(expectDate))
 			})
@@ -54,6 +59,20 @@ var _ = Describe("Page", func() {
 				Expect(err).To(Succeed())
 				Expect(noteTitleString).To(Equal("我的note"))
 			})
+			It("can change note date by clicking and input", func() {
+				Expect(page.Navigate(rootURL)).To(Succeed())
+				noteDate := page.Find("#noteDate")
+				Expect(noteDate.Click()).To(Succeed())
+				Expect(noteDate.Fill("2018-01-01")).To(Succeed())
+				noteTitleString, err := noteDate.Text()
+				Expect(err).To(Succeed())
+				Expect(noteTitleString).To(Equal("2018-01-01"))
+
+			})
+			//It("will remember last edited noteDate", func() {
+			//	Expect(page.Navigate(rootURL)).To(Succeed())
+			//	noteDate := page.Find("%noteDate")
+			//})
 		})
 
 	})
