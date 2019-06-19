@@ -36,6 +36,11 @@ var _ = Describe("Page", func() {
 				text, _ := page.Find("#noteTitle").Text()
 				Expect(text).To(Equal("Untitled"))
 			})
+			It("should have deafault date", func() {
+				Expect(page.Navigate(rootURL)).To(Succeed())
+				text, _ := page.Find("#noteDate").Text()
+				Expect(text).To(Equal("0000-00-00"))
+			})
 			It("can change note title by clicking and input", func() {
 				Expect(page.Navigate(rootURL)).To(Succeed())
 				noteTitle := page.Find("#noteTitle")
