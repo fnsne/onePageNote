@@ -35,12 +35,18 @@ func NewOnePageNoteServer(store Store) *OnePageNoteServer {
 func (s *OnePageNoteServer) note(w http.ResponseWriter, r *http.Request) {
 	if r.Method == http.MethodPost {
 		var note Note
-		json.NewDecoder(r.Body).Decode(&note)
+		err := json.NewDecoder(r.Body).Decode(&note)
+		if err != nil {
+			w.WriteHeader(http.StatusBadRequest)
+		}
 		s.store.SetNote(note)
 		w.WriteHeader(http.StatusOK)
 	}
 	if r.Method == http.MethodGet {
-		json.NewEncoder(w).Encode(s.store.GetNote())
+		err := json.NewEncoder(w).Encode(s.store.GetNote())
+		if err != nil {
+			w.WriteHeader(http.StatusBadRequest)
+		}
 	}
 	w.WriteHeader(http.StatusBadRequest)
 }
