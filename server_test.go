@@ -24,7 +24,7 @@ func (s *StubStore) GetNote() Note {
 
 func Test_Server_can_edit_note_date(t *testing.T) {
 	store := &StubStore{}
-	server := OnePageNoteServer{store}
+	server := NewOnePageNoteServer(store)
 
 	body := &bytes.Buffer{}
 	date, _ := time.Parse("2006-01-02", "2018-05-10")
