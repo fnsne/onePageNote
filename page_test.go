@@ -1,11 +1,10 @@
-package onePage_test
+package main
 
 import (
 	. "github.com/onsi/ginkgo"
 	. "github.com/onsi/gomega"
 	"github.com/sclevine/agouti"
 	"net/http/httptest"
-	"onePage"
 )
 
 var _ = Describe("Page", func() {
@@ -17,7 +16,7 @@ var _ = Describe("Page", func() {
 		page, err = agoutiDriver.NewPage()
 		Expect(err).NotTo(HaveOccurred())
 
-		onePageNoteServer := &onePage.OnePageNoteServer{}
+		onePageNoteServer := &OnePageNoteServer{}
 
 		server := httptest.NewServer(onePageNoteServer)
 		rootURL = server.URL

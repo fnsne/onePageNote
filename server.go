@@ -1,4 +1,4 @@
-package onePage
+package main
 
 import (
 	"html/template"
@@ -9,8 +9,13 @@ type OnePageNoteServer struct {
 }
 
 func (*OnePageNoteServer) ServeHTTP(w http.ResponseWriter, r *http.Request) {
-	tmp, _ := template.ParseFiles("note.html")
-	if r.Method == http.MethodGet {
-		tmp.Execute(w, nil)
-	}
+	router := http.NewServeMux()
+	router.Handle("/", http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		tmp, _ := template.ParseFiles("view/note.html")
+		if r.Method == http.MethodGet {
+			tmp.Execute(w, nil)
+		}
+	}))
+	router.Handle("/static/", http.StripPrefix("/static", http.FileServer(http.Dir("static"))))
+	router.ServeHTTP(w, r)
 }
