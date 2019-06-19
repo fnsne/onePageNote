@@ -1,10 +1,12 @@
 package main
 
 import (
+	"fmt"
 	. "github.com/onsi/ginkgo"
 	. "github.com/onsi/gomega"
 	"github.com/sclevine/agouti"
 	"net/http/httptest"
+	"time"
 )
 
 var _ = Describe("Page", func() {
@@ -38,8 +40,10 @@ var _ = Describe("Page", func() {
 			})
 			It("should have deafault date", func() {
 				Expect(page.Navigate(rootURL)).To(Succeed())
+				expectDate := time.Now().Format("2006-01-02")
+				fmt.Println("==================expectDate = ", expectDate)
 				text, _ := page.Find("#noteDate").Text()
-				Expect(text).To(Equal("0000-00-00"))
+				Expect(text).To(Equal(expectDate))
 			})
 			It("can change note title by clicking and input", func() {
 				Expect(page.Navigate(rootURL)).To(Succeed())
