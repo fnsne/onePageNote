@@ -34,10 +34,12 @@
 .keyword{
     display: inline-grid;
     place-items: center;
+    color: blue;
 }
 .comment{
     display: inline-grid;
     place-items: center;
+    color: red;
 }
 
 .greenPen{
