@@ -26,36 +26,14 @@ $(window).bind("load", function () {
 
 function genGrids(number) {
     $('.baseGrid').remove();
-    switch (number) {
-        case 8:
-            x = 4;
-            y = 2;
-            break;
-        case 16:
-            x = 4;
-            y = 4;
-            break;
-        case 32:
-            x = 8;
-            y = 4;
-            break
-        case 64:
-            x = 8;
-            y = 8;
-            break;
 
-    }
-
+    [x, y] = getColumnRowNums();
 
     columnWidth = Math.floor(100 / x);
-    console.log("columnWidth = ", columnWidth);
     columnTmp = "repeat(" + x.toString() + "," + columnWidth.toString() + "%)";
-    console.log("columnTmp = ", columnTmp);
 
     rowHeight = Math.floor(100 / y);
-    console.log("rowHeight = ", rowHeight);
     rowTmp = "repeat(" + y.toString() + "," + rowHeight.toString() + "%)";
-    console.log("rowTmp = ", rowTmp);
 
     parent = $('#parent');
     parent.css("grid-template-columns", columnTmp);
@@ -64,6 +42,19 @@ function genGrids(number) {
     for (i = 0; i < num; i++) {
         var template = $('#baseGridTemplate').html();
         parent.append(template)
+    }
+}
+
+function getColumnRowNums() {
+    switch (number) {
+        case 8:
+            return [4, 2];
+        case 16:
+            return [4, 4];
+        case 32:
+            return [8, 4];
+        case 64:
+            return [8, 8];
     }
 }
 
