@@ -27,7 +27,7 @@ $(window).bind("load", function () {
 function genGrids(number) {
     $('.baseGrid').remove();
 
-    [x, y] = getColumnRowNums();
+    [x, y] = getColumnRowNums(number);
 
     columnWidth = Math.floor(100 / x);
     columnTmp = "repeat(" + x.toString() + "," + columnWidth.toString() + "%)";
@@ -45,7 +45,7 @@ function genGrids(number) {
     }
 }
 
-function getColumnRowNums() {
+function getColumnRowNums(number) {
     switch (number) {
         case 8:
             return [4, 2];

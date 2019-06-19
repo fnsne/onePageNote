@@ -69,9 +69,44 @@ var _ = Describe("Page", func() {
 				Expect(noteTitleString).To(Equal("2018-01-01"))
 
 			})
+			It("should change grids number", func() {
+				Expect(page.Navigate(rootURL)).To(Succeed())
+				By("clicking button 16", func() {
+					Expect(page.Find("#button16").Click()).To(Succeed())
+					count, err := page.All(".baseGrid").Count()
+					Expect(err).To(Succeed())
+					Expect(count).To(Equal(15))
+				})
+				By("clicking button 32", func() {
+					Expect(page.Find("#button32").Click()).To(Succeed())
+					count, err := page.All(".baseGrid").Count()
+					Expect(err).To(Succeed())
+					Expect(count).To(Equal(31))
+				})
+				By("clicking button 64", func() {
+					Expect(page.Find("#button64").Click()).To(Succeed())
+					count, err := page.All(".baseGrid").Count()
+					Expect(err).To(Succeed())
+					Expect(count).To(Equal(63))
+				})
+				By("clicking button 8", func() {
+					Expect(page.Find("#button8").Click()).To(Succeed())
+					count, err := page.All(".baseGrid").Count()
+					Expect(err).To(Succeed())
+					Expect(count).To(Equal(7))
+				})
+			})
 			//It("will remember last edited noteDate", func() {
 			//	Expect(page.Navigate(rootURL)).To(Succeed())
-			//	noteDate := page.Find("%noteDate")
+			//	noteDate := page.Find("#noteDate")
+			//	Expect(noteDate.Click()).To(Succeed())
+			//	Expect(noteDate.Fill("2018-02-02")).To(Succeed())
+			//	Expect(page.Navigate(rootURL)).To(Succeed())
+			//	noteDate = page.Find("#noteDate")
+			//	Expect(noteDate.Click()).To(Succeed())
+			//	noteDateString, err := noteDate.Text()
+			//	Expect(err).To(Succeed())
+			//	Expect(noteDateString).To(Equal("2018-02-02"))
 			//})
 		})
 
