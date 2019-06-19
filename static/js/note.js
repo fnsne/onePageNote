@@ -1,7 +1,17 @@
 $(window).bind("load", function () {
     var today = getCurrentDate();
     $('#noteDate').html(today)
+
+    var num = 7;
+    for (i= 0; i < num;i++){
+        createBaseGrid();
+    }
 });
+
+function createBaseGrid() {
+    var template = $('#baseGridTemplate').html();
+    $('#parent').append(template)
+}
 
 function getCurrentDate() {
     var today = new Date();
@@ -12,3 +22,4 @@ function getCurrentDate() {
     today = d.join("-");
     return today;
 }
+

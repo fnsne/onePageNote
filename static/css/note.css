@@ -25,7 +25,21 @@
      /*基本*/
     border-style:solid;
     border-color: chartreuse;
+
+    /*child layout*/
+    display: grid;
+    grid-template-rows: 50% 50% ;
+    grid-template-columns: 100% ;
 }
+.keyword{
+    display: inline-grid;
+    place-items: center;
+}
+.comment{
+    display: inline-grid;
+    place-items: center;
+}
+
 .greenPen{
     color: limegreen;
 }
