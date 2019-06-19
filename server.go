@@ -26,18 +26,21 @@ func NewOnePageNoteServer(store Store) *OnePageNoteServer {
 	router := http.NewServeMux()
 	router.Handle("/", http.HandlerFunc(server.homePage))
 	router.Handle("/static/", http.StripPrefix("/static", http.FileServer(http.Dir("static"))))
-	router.Handle("/api/note/", http.HandlerFunc(server.saveNote))
+	router.Handle("/api/note/", http.HandlerFunc(server.note))
 
 	server.Handler = router
 	server.store = store
 	return server
 }
-func (s *OnePageNoteServer) saveNote(w http.ResponseWriter, r *http.Request) {
+func (s *OnePageNoteServer) note(w http.ResponseWriter, r *http.Request) {
 	if r.Method == http.MethodPost {
 		var note Note
 		json.NewDecoder(r.Body).Decode(&note)
 		s.store.SetNote(note)
 		w.WriteHeader(http.StatusOK)
+	}
+	if r.Method == http.MethodGet {
+		json.NewEncoder(w).Encode(s.store.GetNote())
 	}
 	w.WriteHeader(http.StatusBadRequest)
 }
