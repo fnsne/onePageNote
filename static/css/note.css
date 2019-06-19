@@ -1,16 +1,18 @@
 #noteDate{
-    grid-row-start: 2;
+    grid-row-start: 1;
     grid-column-start: 2;
 }
 #noteTitle{
-    grid-row-start: 4;
+    grid-row-start: 2;
     grid-column-start: 2;
 }
 #date{
     grid-row-start: 1;
+    grid-column-start: 1;
 }
 #title{
-    grid-row-start: 3;
+    grid-row-start: 2;
+    grid-column-start: 1;
 }
 #firstGrid{
     border-style:solid;
@@ -19,7 +21,7 @@
     /*child 的layout*/
     display: grid;
     grid-template-columns: 20% 80%;
-    grid-template-rows: 25% 25% 25% 25%;
+    grid-template-rows: 50% 50%;
 }
 .baseGrid{
      /*基本*/
@@ -48,8 +50,9 @@
 #parent{
     width: 100%;
     height: 90vh;
+    margin-top: 1px;
     display: grid;
 
-    grid-template-columns: 25% 25% 25% 25%;
-    grid-template-rows: 50% 50%;
+    grid-template-columns: repeat(4, 25%);
+    grid-template-rows: repeat(2, 50%);
 }
