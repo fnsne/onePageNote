@@ -14,19 +14,19 @@ func main() {
 }
 
 type InMemoryStore struct {
-	note Note
+	notes map[int]Note
 }
 
 func NewInMemoryStore() *InMemoryStore {
 	return &InMemoryStore{
-		note: Note{},
+		notes: make(map[int]Note),
 	}
 }
 
-func (i *InMemoryStore) SetNote(note Note) {
-	i.note = note
+func (i *InMemoryStore) SetNote(id int, note Note) {
+	i.notes[id] = note
 }
 
-func (i *InMemoryStore) GetNote() Note {
-	return i.note
+func (i *InMemoryStore) GetNote(id int) Note {
+	return i.notes[id]
 }
