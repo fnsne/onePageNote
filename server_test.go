@@ -25,6 +25,26 @@ func (s *StubStore) GetNote() Note {
 	return s.note
 }
 
+func Test_Server_can_store_keyword_and_comment(t *testing.T) {
+	store := &StubStore{}
+	server := NewOnePageNoteServer(store)
+
+	wantedKeyword := "關鍵字1"
+	wantedComment := "評論1"
+	grids := []Grid{{Keyword: wantedKeyword, Comment: wantedComment}}
+	note := Note{Grids: grids}
+	body := createNoteJSONBody(t, note)
+
+	request := httptest.NewRequest(http.MethodPost, "/api/note/", body)
+	response := httptest.NewRecorder()
+
+	server.ServeHTTP(response, request)
+
+	assert.Equal(t, http.StatusOK, response.Code)
+	assert.Equal(t, wantedKeyword, store.GetNote().Grids[0].Keyword)
+	assert.Equal(t, wantedComment, store.GetNote().Grids[0].Comment)
+}
+
 func Test_Server_can_store_note_title(t *testing.T) {
 	store := &StubStore{}
 	server := NewOnePageNoteServer(store)

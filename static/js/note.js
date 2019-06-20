@@ -30,9 +30,22 @@ const host = window.location.href;
 function updateNote() {
     d = new Date($('#noteDate').html());
     title = $('#noteTitle').html();
+
+    var grids = [];
+    $('.baseGrid').each(function () {
+        var keyword = $(this).find(".keyword").html();
+        var comment = $(this).find(".comment").html();
+        var grid = {
+            Keyword: keyword,
+            Comment: comment
+        }
+        grids.push(grid)
+    });
+
     note = {
         Date: d,
-        Title: title
+        Title: title,
+        Grids: grids
     };
 
     fetch(host + "api/note/",
@@ -45,7 +58,9 @@ function updateNote() {
     });
     return {d, note};
 }
+
 var t;
+
 function getNote() {
     var note = {"Date": "0000-00-00"};
     fetch(host + '/api/note/', {method: 'GET'})
@@ -56,8 +71,22 @@ function getNote() {
             note = js;
             if (note.Date !== null) {
                 d = FormatDate(new Date(note.Date));
-                $('#noteDate').html(d)
+                $('#noteDate').html(d);
                 $('#noteTitle').html(note.Title);
+                if (note.Grids !== undefined) {
+                    for (i = 0; i < note.Grids.length; i++) {
+                        let grid = note.Grids[i];
+                        var keyword = grid.Keyword;
+                        var comment = grid.Comment;
+                        if (keyword !== undefined) {
+                            $('.keyword')[i].innerHTML = keyword
+                        }
+                        if (comment !== undefined) {
+                            $('.comment')[i].innerHTML = comment
+                        }
+                    }
+                }
+
             }
         });
 }

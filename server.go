@@ -16,6 +16,7 @@ type Store interface {
 type Note struct {
 	Date  *time.Time
 	Title string
+	Grids []Grid
 }
 type OnePageNoteServer struct {
 	store Store
@@ -43,6 +44,7 @@ func (s *OnePageNoteServer) note(w http.ResponseWriter, r *http.Request) {
 			w.WriteHeader(http.StatusBadRequest)
 		} else {
 			s.store.SetNote(note)
+			fmt.Println("set note ", note)
 			w.WriteHeader(http.StatusOK)
 		}
 	} else if r.Method == http.MethodGet {
@@ -60,4 +62,9 @@ func (s *OnePageNoteServer) homePage(w http.ResponseWriter, r *http.Request) {
 	if r.Method == http.MethodGet {
 		tmp.Execute(w, nil)
 	}
+}
+
+type Grid struct {
+	Keyword string
+	Comment string
 }
