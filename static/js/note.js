@@ -2,27 +2,47 @@ $(window).bind("load", function () {
     $('#button8').click(function () {
         genGrids(8)
     });
-
     $('#button16').click(function () {
         genGrids(16)
     });
-
     $('#button32').click(function () {
         genGrids(32)
     });
-
     $('#button64').click(function () {
         genGrids(64)
     });
 
+    $('#testBtn').click(function () {
+        getNote()
+    });
+
+
     var today = getCurrentDate();
     $('#noteDate').html(today);
+
+    getNote();
 
     var number = 8;
 
     genGrids(number);
 });
+const host = window.location.href;
 
+function getNote() {
+    var note = {"Date": "0000-00-00"};
+    fetch(host + '/api/note', {method: 'get'})
+        .then(function (response) {
+            return response.json();
+        })
+        .then(function (js) {
+            note = js;
+            console.log(js);
+            if (note.Date !== null) {
+                d = FormatDate(new Date(note.Date));
+                $('#noteDate').html(d)
+            }
+        });
+}
 
 function genGrids(number) {
     $('.baseGrid').remove();
@@ -60,11 +80,14 @@ function getColumnRowNums(number) {
 
 function getCurrentDate() {
     var today = new Date();
-    var d = [];
-    d.push(today.getFullYear());
-    d.push(String(today.getMonth() + 1).padStart(2, '0'));
-    d.push(String(today.getDate()).padStart(2, '0'));
-    today = d.join("-");
+    today = FormatDate(today);
     return today;
 }
 
+function FormatDate(date) {
+    var d = [];
+    d.push(date.getFullYear());
+    d.push(String(date.getMonth() + 1).padStart(2, '0'));
+    d.push(String(date.getDate()).padStart(2, '0'));
+    return d.join("-");
+}

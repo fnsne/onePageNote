@@ -1,30 +1,25 @@
 package main
 
 import (
-	"fmt"
 	. "github.com/onsi/ginkgo"
 	. "github.com/onsi/gomega"
 	"github.com/sclevine/agouti"
 	"net/http/httptest"
-	"os"
 	"time"
 )
 
 var _ = Describe("Page", func() {
 	var page *agouti.Page
 	var rootURL string
+	var store *InMemoryStore
 
 	BeforeEach(func() {
 		var err error
 		page, err = agoutiDriver.NewPage()
 		Expect(err).NotTo(HaveOccurred())
 
-		err = os.Remove("db.notes.json")
-		if err != nil {
-			fmt.Printf("err= %v", err)
-		}
-
-		onePageNoteServer := &OnePageNoteServer{}
+		store = &InMemoryStore{}
+		onePageNoteServer := NewOnePageNoteServer(store)
 
 		server := httptest.NewServer(onePageNoteServer)
 		rootURL = server.URL
@@ -44,7 +39,7 @@ var _ = Describe("Page", func() {
 				text, _ := page.Find("#noteTitle").Text()
 				Expect(text).To(Equal("Untitled"))
 			})
-			It("should have default date", func() {
+			It("should have default Date", func() {
 				Expect(page.Navigate(rootURL)).To(Succeed())
 				expectDate := time.Now().Format("2006-01-02")
 				text, _ := page.Find("#noteDate").Text()
@@ -59,7 +54,7 @@ var _ = Describe("Page", func() {
 				Expect(err).To(Succeed())
 				Expect(noteTitleString).To(Equal("我的note"))
 			})
-			It("can change note date by clicking and input", func() {
+			It("can change note Date by clicking and input", func() {
 				Expect(page.Navigate(rootURL)).To(Succeed())
 				noteDate := page.Find("#noteDate")
 				Expect(noteDate.Click()).To(Succeed())
@@ -95,6 +90,17 @@ var _ = Describe("Page", func() {
 					Expect(err).To(Succeed())
 					Expect(count).To(Equal(7))
 				})
+			})
+
+			It("will remember stored noteDate", func() {
+				date, _ := time.Parse("2006-01-02", "2018-02-02")
+				store.note = Note{&date}
+				Expect(page.Navigate(rootURL)).To(Succeed())
+				Expect(page.Find("#testBtn").Click()).To(Succeed())
+				noteDate := page.Find("#noteDate")
+				noteDateString, err := noteDate.Text()
+				Expect(err).To(Succeed())
+				Expect(noteDateString).To(Equal("2018-02-02"))
 			})
 			//It("will remember last edited noteDate", func() {
 			//	Expect(page.Navigate(rootURL)).To(Succeed())

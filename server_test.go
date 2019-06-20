@@ -16,11 +16,11 @@ type StubStore struct {
 }
 
 func (s *StubStore) SetNote(note Note) {
-	s.date = note.Date
+	s.date = *note.Date
 }
 
 func (s *StubStore) GetNote() Note {
-	return Note{Date: s.date}
+	return Note{Date: &s.date}
 }
 
 func Test_Server_can_edit_note_date(t *testing.T) {
@@ -28,7 +28,7 @@ func Test_Server_can_edit_note_date(t *testing.T) {
 	server := NewOnePageNoteServer(store)
 
 	date, _ := time.Parse("2006-01-02", "2018-05-10")
-	note := Note{Date: date}
+	note := Note{Date: &date}
 	body := createNoteJSONBody(t, note)
 
 	request := httptest.NewRequest(http.MethodPost, "/api/note/", body)
@@ -51,7 +51,7 @@ func Test_Server_can_get_stored_note_date(t *testing.T) {
 
 	assert.Equal(t, response.Code, http.StatusOK)
 	note := getResponseNote(t, response)
-	assert.Equal(t, date, note.Date)
+	assert.Equal(t, &date, note.Date)
 }
 
 func getResponseNote(t *testing.T, response *httptest.ResponseRecorder) Note {

@@ -13,7 +13,7 @@ type Store interface {
 }
 
 type Note struct {
-	Date time.Time
+	Date *time.Time
 }
 type OnePageNoteServer struct {
 	store Store
@@ -47,8 +47,9 @@ func (s *OnePageNoteServer) note(w http.ResponseWriter, r *http.Request) {
 		if err != nil {
 			w.WriteHeader(http.StatusBadRequest)
 		}
+	} else {
+		w.WriteHeader(http.StatusBadRequest)
 	}
-	w.WriteHeader(http.StatusBadRequest)
 }
 
 func (s *OnePageNoteServer) homePage(w http.ResponseWriter, r *http.Request) {
