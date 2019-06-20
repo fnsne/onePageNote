@@ -16,27 +16,45 @@ $(window).bind("load", function () {
         getNote()
     });
 
+    var number = 8;
+    genGrids(number);
 
     var today = getCurrentDate();
     $('#noteDate').html(today);
 
     getNote();
 
-    var number = 8;
-
-    genGrids(number);
+    t = setInterval(function () {
+        const {d, note} = updateNote();
+    }, 1000)
 });
+
 const host = window.location.href;
 
+function updateNote() {
+    d = new Date($('#noteDate').html());
+    note = {
+        Date: d
+    };
+    fetch(host + "api/note/",
+        {
+            method: 'POST',
+            body: JSON.stringify(note),
+        }
+    ).catch(function (err) {
+        console.log(err)
+    });
+    return {d, note};
+}
+var t;
 function getNote() {
     var note = {"Date": "0000-00-00"};
-    fetch(host + '/api/note', {method: 'get'})
+    fetch(host + '/api/note/', {method: 'GET'})
         .then(function (response) {
             return response.json();
         })
         .then(function (js) {
             note = js;
-            console.log(js);
             if (note.Date !== null) {
                 d = FormatDate(new Date(note.Date));
                 $('#noteDate').html(d)

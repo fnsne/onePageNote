@@ -2,6 +2,7 @@ package main
 
 import (
 	"encoding/json"
+	"fmt"
 	"html/template"
 	"net/http"
 	"time"
@@ -37,12 +38,13 @@ func (s *OnePageNoteServer) note(w http.ResponseWriter, r *http.Request) {
 		var note Note
 		err := json.NewDecoder(r.Body).Decode(&note)
 		if err != nil {
+			fmt.Println(err)
 			w.WriteHeader(http.StatusBadRequest)
+		} else {
+			s.store.SetNote(note)
+			w.WriteHeader(http.StatusOK)
 		}
-		s.store.SetNote(note)
-		w.WriteHeader(http.StatusOK)
-	}
-	if r.Method == http.MethodGet {
+	} else if r.Method == http.MethodGet {
 		err := json.NewEncoder(w).Encode(s.store.GetNote())
 		if err != nil {
 			w.WriteHeader(http.StatusBadRequest)

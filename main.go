@@ -2,7 +2,6 @@ package main
 
 import (
 	"net/http"
-	"time"
 )
 
 func main() {
@@ -19,9 +18,8 @@ type InMemoryStore struct {
 }
 
 func NewInMemoryStore() *InMemoryStore {
-	d, _ := time.Parse("2006-01-02", "1997-11-11")
 	return &InMemoryStore{
-		note: Note{&d},
+		note: Note{},
 	}
 }
 
