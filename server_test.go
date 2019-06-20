@@ -27,6 +27,21 @@ func (s *StubStore) GetNote(id int) Note {
 	return s.notes[id]
 }
 
+func Test_Server_can_store_other_note(t *testing.T) {
+	store := &StubStore{notes: map[int]Note{1: {Title: "title1"}, 2: {Title: "title2"}}}
+	server := NewOnePageNoteServer(store)
+
+	response := httptest.NewRecorder()
+	body := &bytes.Buffer{}
+	json.NewEncoder(body).Encode(Note{Title: "titleA"})
+	request := httptest.NewRequest(http.MethodPost, "/api/note/2", body)
+
+	server.ServeHTTP(response, request)
+
+	assert.Equal(t, http.StatusOK, response.Code)
+	assert.Equal(t, "titleA", store.GetNote(2).Title)
+}
+
 func Test_Server_can_get_other_note(t *testing.T) {
 	store := &StubStore{notes: map[int]Note{1: {Title: "title1"}, 2: {Title: "title2"}}}
 	server := NewOnePageNoteServer(store)

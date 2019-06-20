@@ -42,13 +42,18 @@ func (receiver OnePageNoteServer) homePage(w http.ResponseWriter, r *http.Reques
 }
 func (s *OnePageNoteServer) note(w http.ResponseWriter, r *http.Request) {
 	if r.Method == http.MethodPost {
-		var note Note
-		err := json.NewDecoder(r.Body).Decode(&note)
+		id, err := strconv.Atoi(r.URL.Path[len("/api/note/"):])
 		if err != nil {
-			fmt.Println(err)
+			w.WriteHeader(http.StatusBadRequest)
+			fmt.Println("err = ", err)
+			return
+		}
+		var note Note
+		err = json.NewDecoder(r.Body).Decode(&note)
+		if err != nil {
 			w.WriteHeader(http.StatusBadRequest)
 		} else {
-			s.store.SetNote(1, note)
+			s.store.SetNote(id, note)
 			fmt.Println("set note ", note)
 			w.WriteHeader(http.StatusOK)
 		}
