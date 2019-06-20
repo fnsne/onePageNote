@@ -12,10 +12,6 @@ $(window).bind("load", function () {
         genGrids(64)
     });
 
-    $('#testBtn').click(function () {
-        getNote()
-    });
-
     var number = 8;
     genGrids(number);
 
