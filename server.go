@@ -14,7 +14,8 @@ type Store interface {
 }
 
 type Note struct {
-	Date *time.Time
+	Date  *time.Time
+	Title string
 }
 type OnePageNoteServer struct {
 	store Store

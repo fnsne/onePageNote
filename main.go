@@ -28,6 +28,5 @@ func (i *InMemoryStore) SetNote(note Note) {
 }
 
 func (i *InMemoryStore) GetNote() Note {
-
 	return i.note
 }

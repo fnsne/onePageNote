@@ -29,9 +29,12 @@ const host = window.location.href;
 
 function updateNote() {
     d = new Date($('#noteDate').html());
+    title = $('#noteTitle').html();
     note = {
-        Date: d
+        Date: d,
+        Title: title
     };
+
     fetch(host + "api/note/",
         {
             method: 'POST',
@@ -54,6 +57,7 @@ function getNote() {
             if (note.Date !== null) {
                 d = FormatDate(new Date(note.Date));
                 $('#noteDate').html(d)
+                $('#noteTitle').html(note.Title);
             }
         });
 }

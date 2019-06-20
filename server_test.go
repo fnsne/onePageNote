@@ -12,15 +12,34 @@ import (
 )
 
 type StubStore struct {
-	date time.Time
+	date  time.Time
+	Title string
+	note  Note
 }
 
 func (s *StubStore) SetNote(note Note) {
-	s.date = *note.Date
+	s.note = note
 }
 
 func (s *StubStore) GetNote() Note {
-	return Note{Date: &s.date}
+	return s.note
+}
+
+func Test_Server_can_store_note_title(t *testing.T) {
+	store := &StubStore{}
+	server := NewOnePageNoteServer(store)
+
+	wantedTitle := "我是主題"
+	note := Note{Title: wantedTitle}
+	body := createNoteJSONBody(t, note)
+
+	request := httptest.NewRequest(http.MethodPost, "/api/note/", body)
+	response := httptest.NewRecorder()
+
+	server.ServeHTTP(response, request)
+
+	assert.Equal(t, http.StatusOK, response.Code)
+	assert.Equal(t, wantedTitle, store.GetNote().Title)
 }
 
 func Test_Server_can_edit_note_date(t *testing.T) {
@@ -35,13 +54,13 @@ func Test_Server_can_edit_note_date(t *testing.T) {
 	response := httptest.NewRecorder()
 
 	server.ServeHTTP(response, request)
-	assert.Equal(t, response.Code, http.StatusOK)
-	assert.Equal(t, date, store.date)
+	assert.Equal(t, http.StatusOK, response.Code)
+	assert.Equal(t, date, *store.GetNote().Date)
 }
 
 func Test_Server_can_get_stored_note_date(t *testing.T) {
 	date, _ := time.Parse("2006-01-02", "2018-05-10")
-	store := &StubStore{date: date}
+	store := &StubStore{note: Note{Date: &date}}
 	server := NewOnePageNoteServer(store)
 
 	request := httptest.NewRequest(http.MethodGet, "/api/note/", nil)

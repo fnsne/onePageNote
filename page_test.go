@@ -102,22 +102,39 @@ var _ = Describe("Page", func() {
 			//	Expect(err).To(Succeed())
 			//	Expect(noteDateString).To(Equal("2018-02-02"))
 			//})
-			It("will remember last edited noteDate", func() {
+			//It("will remember last edited noteDate", func() {
+			//	Expect(page.Navigate(rootURL)).To(Succeed())
+			//	noteDate := page.Find("#noteDate")
+			//	Expect(noteDate.Click()).To(Succeed())
+			//	Expect(noteDate.Fill("2018-02-02")).To(Succeed())
+			//
+			//	noteDateString, err := noteDate.Text()
+			//	Expect(err).To(Succeed())
+			//	Expect(noteDateString).To(Equal("2018-02-02"))
+			//
+			//	time.Sleep(2 * time.Second)
+			//
+			//	Expect(page.Navigate(rootURL)).To(Succeed())
+			//	noteDateString, err = noteDate.Text()
+			//	Expect(err).To(Succeed())
+			//	Expect(noteDateString).To(Equal("2018-02-02"))
+			//})
+			It("will remember last edited noteTitle", func() {
 				Expect(page.Navigate(rootURL)).To(Succeed())
-				noteDate := page.Find("#noteDate")
-				Expect(noteDate.Click()).To(Succeed())
-				Expect(noteDate.Fill("2018-02-02")).To(Succeed())
+				noteTitle := page.Find("#noteTitle")
+				Expect(noteTitle.Click()).To(Succeed())
+				Expect(noteTitle.Fill("筆記主題")).To(Succeed())
 
-				noteDateString, err := noteDate.Text()
+				noteTitleString, err := noteTitle.Text()
 				Expect(err).To(Succeed())
-				Expect(noteDateString).To(Equal("2018-02-02"))
+				Expect(noteTitleString).To(Equal("筆記主題"))
 
 				time.Sleep(2 * time.Second)
 
 				Expect(page.Navigate(rootURL)).To(Succeed())
-				noteDateString, err = noteDate.Text()
+				noteTitleString, err = noteTitle.Text()
 				Expect(err).To(Succeed())
-				Expect(noteDateString).To(Equal("2018-02-02"))
+				Expect(noteTitleString).To(Equal("筆記主題"))
 			})
 		})
 
