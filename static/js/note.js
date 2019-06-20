@@ -25,7 +25,16 @@ $(window).bind("load", function () {
     }, 1000)
 });
 
-const host = window.location.href;
+function getHost() {
+    u = new URL(window.location.href);
+    return u.origin
+}
+
+function getNoteId() {
+    path = window.location.pathname
+    paths = path.split("/")
+    return paths[2]
+}
 
 function updateNote() {
     d = new Date($('#noteDate').html());
@@ -38,7 +47,7 @@ function updateNote() {
         var grid = {
             Keyword: keyword,
             Comment: comment
-        }
+        };
         grids.push(grid)
     });
 
@@ -48,7 +57,7 @@ function updateNote() {
         Grids: grids
     };
 
-    fetch(host + "api/note/",
+    fetch(getHost() + "/api/note/"+getNoteId(),
         {
             method: 'POST',
             body: JSON.stringify(note),
@@ -63,7 +72,7 @@ var t;
 
 function getNote() {
     var note = {"Date": "0000-00-00"};
-    fetch(host + '/api/note/', {method: 'GET'})
+    fetch(getHost() + '/api/note/'+getNoteId(), {method: 'GET'})
         .then(function (response) {
             return response.json();
         })

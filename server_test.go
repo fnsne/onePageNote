@@ -75,7 +75,7 @@ func Test_Server_can_store_keyword_and_comment(t *testing.T) {
 	note := Note{Grids: grids}
 	body := createNoteJSONBody(t, note)
 
-	request := httptest.NewRequest(http.MethodPost, "/api/note/1/", body)
+	request := httptest.NewRequest(http.MethodPost, "/api/note/1", body)
 	response := httptest.NewRecorder()
 
 	server.ServeHTTP(response, request)
