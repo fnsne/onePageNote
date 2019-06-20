@@ -136,39 +136,78 @@ var _ = Describe("Page", func() {
 			//	Expect(err).To(Succeed())
 			//	Expect(noteTitleString).To(Equal("筆記主題"))
 			//})
-			It("will remember input keywords", func() {
+			It("will remember input keywords and comments", func() {
 				Expect(page.Navigate(rootURL)).To(Succeed())
 				keywords := page.All(".keyword")
+				comments := page.All(".comment")
 				Expect(keywords.At(0).Click()).To(Succeed())
 				Expect(keywords.At(0).Fill("關鍵字1")).To(Succeed())
+				Expect(comments.At(0).Click()).To(Succeed())
+				Expect(comments.At(0).Fill("評論1")).To(Succeed())
+
 				Expect(keywords.At(1).Click()).To(Succeed())
 				Expect(keywords.At(1).Fill("關鍵字2")).To(Succeed())
+				Expect(comments.At(1).Click()).To(Succeed())
+				Expect(comments.At(1).Fill("評論2")).To(Succeed())
+
 				Expect(keywords.At(2).Click()).To(Succeed())
 				Expect(keywords.At(2).Fill("關鍵字3")).To(Succeed())
+				Expect(comments.At(2).Click()).To(Succeed())
+				Expect(comments.At(2).Fill("評論3")).To(Succeed())
 
 				keyword1, err := keywords.At(0).Text()
 				Expect(err).To(Succeed())
 				Expect(keyword1).To(Equal("關鍵字1"))
+
+				comment1, err := comments.At(0).Text()
+				Expect(err).To(Succeed())
+				Expect(comment1).To(Equal("評論1"))
+
 				keyword2, err := keywords.At(1).Text()
 				Expect(err).To(Succeed())
 				Expect(keyword2).To(Equal("關鍵字2"))
+
+				comment2, err := comments.At(1).Text()
+				Expect(err).To(Succeed())
+				Expect(comment2).To(Equal("評論2"))
+
 				keyword3, err := keywords.At(2).Text()
 				Expect(err).To(Succeed())
 				Expect(keyword3).To(Equal("關鍵字3"))
 
+				comment3, err := comments.At(2).Text()
+				Expect(err).To(Succeed())
+				Expect(comment3).To(Equal("評論3"))
+
 				time.Sleep(2 * time.Second)
 
-				Expect(page.Navigate(rootURL)).To(Succeed())
 				keyword1, err = keywords.At(0).Text()
 				Expect(err).To(Succeed())
 				Expect(keyword1).To(Equal("關鍵字1"))
+
+				comment1, err = comments.At(0).Text()
+				Expect(err).To(Succeed())
+				Expect(comment1).To(Equal("評論1"))
+
 				keyword2, err = keywords.At(1).Text()
 				Expect(err).To(Succeed())
 				Expect(keyword2).To(Equal("關鍵字2"))
+
+				comment2, err = comments.At(1).Text()
+				Expect(err).To(Succeed())
+				Expect(comment2).To(Equal("評論2"))
+
 				keyword3, err = keywords.At(2).Text()
 				Expect(err).To(Succeed())
 				Expect(keyword3).To(Equal("關鍵字3"))
 
+				keyword3, err = keywords.At(2).Text()
+				Expect(err).To(Succeed())
+				Expect(keyword3).To(Equal("關鍵字3"))
+
+				comment3, err = comments.At(2).Text()
+				Expect(err).To(Succeed())
+				Expect(comment3).To(Equal("評論3"))
 			})
 		})
 
