@@ -90,13 +90,8 @@ func (s *OnePageNoteServer) note(w http.ResponseWriter, r *http.Request) {
 
 func (s *OnePageNoteServer) notePage(w http.ResponseWriter, r *http.Request) {
 	if r.Method == http.MethodGet {
-		if r.URL.Path == "/note/" {
-			tmp, _ := template.ParseFiles("view/noteList.html")
-			tmp.Execute(w, nil)
-		} else {
-			tmp, _ := template.ParseFiles("view/note.html")
-			tmp.Execute(w, nil)
-		}
+		tmp, _ := template.ParseFiles("view/note.html")
+		tmp.Execute(w, nil)
 	}
 }
 
