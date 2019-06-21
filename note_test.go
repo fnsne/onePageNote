@@ -8,7 +8,7 @@ import (
 	"time"
 )
 
-var _ = Describe("Page", func() {
+var _ = Describe("Note", func() {
 	var page *agouti.Page
 	var rootURL string
 	var store *InMemoryStore
