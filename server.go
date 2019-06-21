@@ -54,7 +54,7 @@ func (s *OnePageNoteServer) note(w http.ResponseWriter, r *http.Request) {
 			w.WriteHeader(http.StatusBadRequest)
 		} else {
 			s.store.SetNote(id, note)
-			fmt.Println("set note ", note)
+			fmt.Println("set note ",id , "to ", note)
 			w.WriteHeader(http.StatusOK)
 		}
 		return

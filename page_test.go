@@ -210,9 +210,5 @@ var _ = Describe("Page", func() {
 				Expect(comment3).To(Equal("評論3"))
 			})
 		})
-
 	})
 })
-
-func shouldEqual(page *agouti.Page, selector, expect string) {
-}
