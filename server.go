@@ -12,6 +12,7 @@ import (
 type Store interface {
 	GetNote(id int) Note
 	SetNote(id int, note Note)
+	GetNoteList() []Note
 }
 
 type Note struct {
@@ -54,32 +55,48 @@ func (s *OnePageNoteServer) note(w http.ResponseWriter, r *http.Request) {
 			w.WriteHeader(http.StatusBadRequest)
 		} else {
 			s.store.SetNote(id, note)
-			fmt.Println("set note ",id , "to ", note)
+			fmt.Println("set note ", id, "to ", note)
 			w.WriteHeader(http.StatusOK)
 		}
 		return
 	}
 	if r.Method == http.MethodGet {
-		id, err := strconv.Atoi(r.URL.Path[len("/api/note/"):])
-		if err != nil {
-			fmt.Println("err= ", err)
-			w.WriteHeader(http.StatusBadRequest)
-			return
+		idString := r.URL.Path[len("/api/note/"):]
+		if len(idString) == 0 {
+			var notes = s.store.GetNoteList()
+			err := json.NewEncoder(w).Encode(notes)
+			if err != nil {
+				w.WriteHeader(http.StatusBadRequest)
+				return
+			}
+		} else {
+			id, err := strconv.Atoi(idString)
+			if err != nil {
+				fmt.Println("err= ", err)
+				w.WriteHeader(http.StatusBadRequest)
+				return
+			}
+			err = json.NewEncoder(w).Encode(s.store.GetNote(id))
+			if err != nil {
+				w.WriteHeader(http.StatusBadRequest)
+				return
+			}
 		}
-		err = json.NewEncoder(w).Encode(s.store.GetNote(id))
-		if err != nil {
-			w.WriteHeader(http.StatusBadRequest)
-			return
-		}
+
 	} else {
 		w.WriteHeader(http.StatusBadRequest)
 	}
 }
 
 func (s *OnePageNoteServer) notePage(w http.ResponseWriter, r *http.Request) {
-	tmp, _ := template.ParseFiles("view/note.html")
 	if r.Method == http.MethodGet {
-		tmp.Execute(w, nil)
+		if r.URL.Path == "/note/" {
+			tmp, _ := template.ParseFiles("view/noteList.html")
+			tmp.Execute(w, nil)
+		} else {
+			tmp, _ := template.ParseFiles("view/note.html")
+			tmp.Execute(w, nil)
+		}
 	}
 }
 
