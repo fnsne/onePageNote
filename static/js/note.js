@@ -19,15 +19,40 @@ $(window).bind("load", function () {
     $('#noteDate').html(today);
 
     getNote();
+    getNoteList();
 
-    t = setInterval(function () {
+    t1 = setInterval(function () {
         const {d, note} = updateNote();
-    }, 1000)
+    }, 1000);
+
+    t2 = setInterval(function () {
+        getNoteList();
+    }, 2000);
 });
 
 function getHost() {
     u = new URL(window.location.href);
     return u.origin
+}
+
+function getNoteList() {
+    fetch(getHost()+"/api/note/",
+        {method:'GET'})
+        .then(function (response) {
+            return response.json()
+        })
+        .then(function (js) {
+            var tmp = $('#noteItemTemplate').html();
+            var count = 0;
+            $('.noteItem').remove();
+            for(item in js) {
+                $('#noteListItems').append(tmp);
+                count ++;
+            }
+            for(i=0;i<count;i++){
+                $('.noteItem')[i].innerHTML = js[i].Title;
+            }
+        });
 }
 
 function getNoteId() {

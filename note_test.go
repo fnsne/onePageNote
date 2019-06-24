@@ -210,5 +210,15 @@ var _ = Describe("Note", func() {
 				Expect(comment3).To(Equal("評論3"))
 			})
 		})
+		Context("note list", func() {
+			FIt("should show note title.", func() {
+				store.notes = map[int]Note{1:{Title:"title1"}}
+				Expect(page.Navigate(rootURL)).To(Succeed())
+				noteItems := page.All(".noteItem")
+				note1Title, err := noteItems.At(0).Text()
+				Expect(err).To(Succeed())
+				Expect(note1Title).To(Equal("title1"))
+			})
+		})
 	})
 })
