@@ -16,6 +16,10 @@ type StubStore struct {
 	notes map[int]Note
 }
 
+func (s *StubStore) CreateNote(note Note) {
+	s.notes[5] = note
+}
+
 func (s *StubStore) GetNoteList() []Note {
 	var notes []Note
 	for _, note := range s.notes {
@@ -36,9 +40,23 @@ func (s *StubStore) GetNote(id int) Note {
 	return s.notes[id]
 }
 
+func Test_Server_can_create_new_note(t *testing.T) {
+	store := &StubStore{notes: map[int]Note{1: {Id: 1, Title: "title1"}, 2: {Id: 2, Title: "title2"}}}
+	server := NewOnePageNoteServer(store)
+
+	response := httptest.NewRecorder()
+	body := &bytes.Buffer{}
+	json.NewEncoder(body).Encode(Note{Title: "new note"})
+	request := httptest.NewRequest(http.MethodPost, "/api/note/", body)
+
+	server.ServeHTTP(response, request)
+
+	assert.Equal(t, http.StatusOK, response.Code)
+	assert.Equal(t, 3, len(store.GetNoteList()))
+}
+
 func Test_Server_can_get_list_of_notes(t *testing.T) {
-	store := &StubStore{notes: map[int]Note{1: {Id:1, Title: "title1"}, 2: {Id:2, Title: "title2"}}}
-	fmt.Println(store)
+	store := &StubStore{notes: map[int]Note{1: {Id: 1, Title: "title1"}, 2: {Id: 2, Title: "title2"}}}
 	server := NewOnePageNoteServer(store)
 
 	response := httptest.NewRecorder()

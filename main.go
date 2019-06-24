@@ -17,6 +17,10 @@ type InMemoryStore struct {
 	notes map[int]Note
 }
 
+func (i *InMemoryStore) CreateNote(note Note) {
+	panic("implement me")
+}
+
 func (i *InMemoryStore) GetNoteList() []Note {
 	var notes []Note
 	for _, note := range i.notes {
