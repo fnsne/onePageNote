@@ -35,28 +35,6 @@ func (s *StubStore) GetNote(id int) Note {
 	return s.notes[id]
 }
 
-func Test_Server_can_get_note_list(t *testing.T) {
-	store := &StubStore{
-		notes: map[int]Note{
-			1: {Title: "note1"},
-			2: {Title: "note2"},
-		},
-	}
-	server := NewOnePageNoteServer(store)
-
-	response := httptest.NewRecorder()
-	request := httptest.NewRequest(http.MethodGet, "/api/note/", nil)
-
-	server.ServeHTTP(response, request)
-
-	assert.Equal(t, http.StatusOK, response.Code)
-	var notes []Note
-	json.NewDecoder(response.Body).Decode(&notes)
-	assert.Equal(t, 2, len(notes))
-	assert.Equal(t, "note1", notes[0].Title)
-	assert.Equal(t, "note2", notes[1].Title)
-}
-
 func Test_Server_can_store_other_note(t *testing.T) {
 	store := &StubStore{notes: map[int]Note{1: {Title: "title1"}, 2: {Title: "title2"}}}
 	server := NewOnePageNoteServer(store)
