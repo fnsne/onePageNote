@@ -31,22 +31,22 @@ var _ = Describe("Note", func() {
 	Describe("note view", func() {
 		Context("Get home page", func() {
 			It("should have web title", func() {
-				Expect(page.Navigate(rootURL + "/note/1")).To(Succeed())
+				Expect(page.Navigate(rootURL)).To(Succeed())
 				Expect(page.Title()).To(Equal("One Page Note"))
 			})
 			It("should have default note title", func() {
-				Expect(page.Navigate(rootURL + "/note/1")).To(Succeed())
+				Expect(page.Navigate(rootURL)).To(Succeed())
 				text, _ := page.Find("#noteTitle").Text()
 				Expect(text).To(Equal("Untitled"))
 			})
 			It("should have default Date", func() {
-				Expect(page.Navigate(rootURL + "/note/1")).To(Succeed())
+				Expect(page.Navigate(rootURL)).To(Succeed())
 				expectDate := time.Now().Format("2006-01-02")
 				text, _ := page.Find("#noteDate").Text()
 				Expect(text).To(Equal(expectDate))
 			})
 			It("can change note title by clicking and input", func() {
-				Expect(page.Navigate(rootURL + "/note/1")).To(Succeed())
+				Expect(page.Navigate(rootURL)).To(Succeed())
 				noteTitle := page.Find("#noteTitle")
 				Expect(noteTitle.Click()).To(Succeed())
 				Expect(noteTitle.Fill("我的note")).To(Succeed())
@@ -55,7 +55,7 @@ var _ = Describe("Note", func() {
 				Expect(noteTitleString).To(Equal("我的note"))
 			})
 			It("can change note Date by clicking and input", func() {
-				Expect(page.Navigate(rootURL + "/note/1")).To(Succeed())
+				Expect(page.Navigate(rootURL)).To(Succeed())
 				noteDate := page.Find("#noteDate")
 				Expect(noteDate.Click()).To(Succeed())
 				Expect(noteDate.Fill("2018-01-01")).To(Succeed())
@@ -65,7 +65,7 @@ var _ = Describe("Note", func() {
 
 			})
 			It("should change grids number", func() {
-				Expect(page.Navigate(rootURL + "/note/1")).To(Succeed())
+				Expect(page.Navigate(rootURL)).To(Succeed())
 				By("clicking button 16", func() {
 					Expect(page.Find("#button16").Click()).To(Succeed())
 					count, err := page.All(".baseGrid").Count()
@@ -95,14 +95,14 @@ var _ = Describe("Note", func() {
 			It("will remember stored noteDate", func() {
 				date, _ := time.Parse("2006-01-02", "2018-02-02")
 				store.notes = map[int]Note{1: {Date: &date}}
-				Expect(page.Navigate(rootURL + "/note/1")).To(Succeed())
+				Expect(page.Navigate(rootURL)).To(Succeed())
 				noteDate := page.Find("#noteDate")
 				noteDateString, err := noteDate.Text()
 				Expect(err).To(Succeed())
 				Expect(noteDateString).To(Equal("2018-02-02"))
 			})
 			It("will remember last edited noteDate", func() {
-				Expect(page.Navigate(rootURL + "/note/1")).To(Succeed())
+				Expect(page.Navigate(rootURL)).To(Succeed())
 				noteDate := page.Find("#noteDate")
 				Expect(noteDate.Click()).To(Succeed())
 				Expect(noteDate.Fill("2018-02-02")).To(Succeed())
@@ -113,13 +113,13 @@ var _ = Describe("Note", func() {
 
 				time.Sleep(2 * time.Second)
 
-				Expect(page.Navigate(rootURL + "/note/1")).To(Succeed())
+				Expect(page.Navigate(rootURL)).To(Succeed())
 				noteDateString, err = noteDate.Text()
 				Expect(err).To(Succeed())
 				Expect(noteDateString).To(Equal("2018-02-02"))
 			})
 			It("will remember last edited noteTitle", func() {
-				Expect(page.Navigate(rootURL + "/note/1")).To(Succeed())
+				Expect(page.Navigate(rootURL)).To(Succeed())
 				noteTitle := page.Find("#noteTitle")
 				Expect(noteTitle.Click()).To(Succeed())
 				Expect(noteTitle.Fill("筆記主題")).To(Succeed())
@@ -130,13 +130,13 @@ var _ = Describe("Note", func() {
 
 				time.Sleep(2 * time.Second)
 
-				Expect(page.Navigate(rootURL + "/note/1")).To(Succeed())
+				Expect(page.Navigate(rootURL)).To(Succeed())
 				noteTitleString, err = noteTitle.Text()
 				Expect(err).To(Succeed())
 				Expect(noteTitleString).To(Equal("筆記主題"))
 			})
 			It("will remember input keywords and comments", func() {
-				Expect(page.Navigate(rootURL + "/note/1")).To(Succeed())
+				Expect(page.Navigate(rootURL)).To(Succeed())
 				keywords := page.All(".keyword")
 				comments := page.All(".comment")
 				Expect(keywords.At(0).Click()).To(Succeed())
@@ -180,7 +180,7 @@ var _ = Describe("Note", func() {
 
 				time.Sleep(2 * time.Second)
 
-				Expect(page.Navigate(rootURL + "/note/1")).To(Succeed())
+				Expect(page.Navigate(rootURL)).To(Succeed())
 				keyword1, err = keywords.At(0).Text()
 				Expect(err).To(Succeed())
 				Expect(keyword1).To(Equal("關鍵字1"))

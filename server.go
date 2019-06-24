@@ -30,7 +30,6 @@ func NewOnePageNoteServer(store Store) *OnePageNoteServer {
 
 	router := http.NewServeMux()
 	router.Handle("/", http.HandlerFunc(server.homePage))
-	router.Handle("/note/", http.HandlerFunc(server.notePage))
 	router.Handle("/static/", http.StripPrefix("/static", http.FileServer(http.Dir("static"))))
 	router.Handle("/api/note/", http.HandlerFunc(server.note))
 
@@ -39,7 +38,11 @@ func NewOnePageNoteServer(store Store) *OnePageNoteServer {
 	return server
 }
 func (receiver OnePageNoteServer) homePage(w http.ResponseWriter, r *http.Request) {
-
+	if r.Method == http.MethodGet {
+		tmp, _ := template.ParseFiles("view/note.html")
+		currentNoteId := 1
+		tmp.Execute(w, currentNoteId)
+	}
 }
 func (s *OnePageNoteServer) note(w http.ResponseWriter, r *http.Request) {
 	if r.Method == http.MethodPost {
@@ -85,13 +88,6 @@ func (s *OnePageNoteServer) note(w http.ResponseWriter, r *http.Request) {
 
 	} else {
 		w.WriteHeader(http.StatusBadRequest)
-	}
-}
-
-func (s *OnePageNoteServer) notePage(w http.ResponseWriter, r *http.Request) {
-	if r.Method == http.MethodGet {
-		tmp, _ := template.ParseFiles("view/note.html")
-		tmp.Execute(w, nil)
 	}
 }
 

@@ -31,11 +31,8 @@ function getHost() {
 }
 
 function getNoteId() {
-    path = window.location.pathname
-    paths = path.split("/")
-    return paths[2]
+    return $('#noteId').attr("value");
 }
-
 function updateNote() {
     d = new Date($('#noteDate').html());
     title = $('#noteTitle').html();
@@ -56,8 +53,7 @@ function updateNote() {
         Title: title,
         Grids: grids
     };
-
-    fetch(getHost() + "/api/note/"+getNoteId(),
+    fetch(getHost() + "/api/note/" + getNoteId(),
         {
             method: 'POST',
             body: JSON.stringify(note),
