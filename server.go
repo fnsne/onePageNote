@@ -69,6 +69,7 @@ func (s *OnePageNoteServer) note(w http.ResponseWriter, r *http.Request) {
 		if len(idString) == 0 {
 			var notes = s.store.GetNoteList()
 			err := json.NewEncoder(w).Encode(notes)
+			fmt.Println("get note list", notes)
 			if err != nil {
 				w.WriteHeader(http.StatusBadRequest)
 				return
