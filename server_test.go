@@ -3,6 +3,7 @@ package main
 import (
 	"bytes"
 	"encoding/json"
+	"fmt"
 	"github.com/stretchr/testify/assert"
 	"io"
 	"net/http"
@@ -33,6 +34,26 @@ func (s *StubStore) SetNote(id int, note Note) {
 
 func (s *StubStore) GetNote(id int) Note {
 	return s.notes[id]
+}
+
+func Test_Server_can_get_list_of_notes(t *testing.T) {
+	store := &StubStore{notes: map[int]Note{1: {Id:1, Title: "title1"}, 2: {Id:2, Title: "title2"}}}
+	fmt.Println(store)
+	server := NewOnePageNoteServer(store)
+
+	response := httptest.NewRecorder()
+	request := httptest.NewRequest(http.MethodGet, "/api/note/", nil)
+
+	server.ServeHTTP(response, request)
+
+	assert.Equal(t, http.StatusOK, response.Code)
+	var notes []Note
+	fmt.Println(store.GetNoteList())
+	json.NewDecoder(response.Body).Decode(&notes)
+	assert.Equal(t, 1, notes[0].Id)
+	assert.Equal(t, 2, notes[1].Id)
+	assert.Equal(t, "title1", notes[0].Title)
+	assert.Equal(t, "title2", notes[1].Title)
 }
 
 func Test_Server_can_store_other_note(t *testing.T) {

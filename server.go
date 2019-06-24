@@ -16,6 +16,7 @@ type Store interface {
 }
 
 type Note struct {
+	Id    int
 	Date  *time.Time
 	Title string
 	Grids []Grid
