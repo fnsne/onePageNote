@@ -107,13 +107,13 @@ function genGrids(number) {
     rowHeight = Math.floor(100 / y);
     rowTmp = "repeat(" + y.toString() + "," + rowHeight.toString() + "%)";
 
-    parent = $('#parent');
-    parent.css("grid-template-columns", columnTmp);
-    parent.css("grid-template-rows", rowTmp);
+    let note = $('#note');
+    note.css("grid-template-columns", columnTmp);
+    note.css("grid-template-rows", rowTmp);
     var num = number - 1;
     for (i = 0; i < num; i++) {
         var template = $('#baseGridTemplate').html();
-        parent.append(template)
+        note.append(template)
     }
 }
 

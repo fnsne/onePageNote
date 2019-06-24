@@ -47,11 +47,41 @@
 .greenPen{
     color: limegreen;
 }
-#parent{
+.noteItem{
+    height: 50px;
+    border-top-style: solid;
+}
+#noteListTitle{
+    height: 10%;
+}
+
+#all{
+    width: 100%;
+    height: 90vh;
+    display: grid;
+
+    grid-template-columns: 10% 2% 88%;
+}
+#noteList{
+    width: 100%;
+    height: 90%;
+    display: grid;
+    border-style: solid;
+
+    grid-template-rows: 5% 95%;
+}
+#noteListItems{
+    height: 100%;
+    overflow: hidden;
+    overflow-y: scroll;
+}
+#note{
     width: 100%;
     height: 90vh;
     margin-top: 1px;
     display: grid;
+
+    grid-column-start: 3;
 
     grid-template-columns: repeat(4, 25%);
     grid-template-rows: repeat(2, 50%);
