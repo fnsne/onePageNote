@@ -48,7 +48,7 @@ function newNote() {
     fetch(getHost() + "/api/note/",
         {
             method: "POST",
-            body: JSON.stringify({Title: "new note"}),
+            body: JSON.stringify({Title: "Untitled"}),
         }
     )
         .then(function (response) {
@@ -62,7 +62,7 @@ function newNote() {
             // }
             currentNote = js;
             currentNoteId = js.Id;
-            $('#noteTitle').html("new note");
+            $('#noteTitle').html("Untitled");
             var today = getCurrentDate();
             $('#noteDate').html(today);
         })
@@ -77,20 +77,32 @@ function getNoteList() {
         .then(function (js) {
             var tmp = $('#noteItemTemplate').html();
             var count = 0;
+            noteList = js;
+            if (noteList == null) {
+                newNote();
+            }
             $('.noteItem').remove();
-            for (item in js) {
+            for (item in noteList) {
                 $('#noteListItems').append(tmp);
                 count++;
             }
             for (i = 0; i < count; i++) {
-                $('.noteItem')[i].innerHTML = js[i].Title;
+                var item = $('.noteItem')[i];
+                item.innerHTML = noteList[i].Title;
+                item.setAttribute("value", noteList[i].Id);
+                item.addEventListener("click", function () {
+                    id =parseInt( this.getAttribute("value"));
+                    console.log("click on ", id);
+                    currentNoteId = parseInt(id);
+                    getNote();
+                })
             }
         });
 }
 
 function getNoteId() {
     if (currentNoteId === undefined) {
-        currentNoteId = $('#noteId').attr("value");
+        currentNoteId = parseInt($('#noteId').attr("value"));
     }
     return currentNoteId;
 }
@@ -113,7 +125,8 @@ function updateNote() {
     note = {
         Date: d,
         Title: title,
-        Grids: grids
+        Grids: grids,
+        Id:currentNoteId,
     };
     fetch(getHost() + "/api/note/" + getNoteId(),
         {

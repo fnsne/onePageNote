@@ -77,6 +77,10 @@ func (s *OnePageNoteServer) updateNote(w http.ResponseWriter, r *http.Request) {
 	err = json.NewDecoder(r.Body).Decode(&note)
 	if err != nil {
 		w.WriteHeader(http.StatusBadRequest)
+		var p []byte
+		r.Body.Read(p)
+		fmt.Println("r.Body = ", p)
+		fmt.Println("err = ", err)
 	} else {
 		if len(s.store.GetNoteList()) == 0 {
 			s.store.CreateNote(note)
@@ -127,7 +131,7 @@ func (s *OnePageNoteServer) note(w http.ResponseWriter, r *http.Request) {
 	} else if r.Method == http.MethodGet {
 		idString := r.URL.Path[len("/api/note/"):]
 		if len(idString) == 0 {
-			fmt.Println("list note")
+			//fmt.Println("list note")
 			s.listNote(w, r)
 		} else {
 			fmt.Println("retrieve note")
