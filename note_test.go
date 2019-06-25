@@ -94,7 +94,7 @@ var _ = Describe("Note", func() {
 
 			It("will remember stored noteDate", func() {
 				date, _ := time.Parse("2006-01-02", "2018-02-02")
-				store.notes = map[int]Note{1: {Date: &date}}
+				store.notes = []Note{{Date: &date}}
 				Expect(page.Navigate(rootURL)).To(Succeed())
 				noteDate := page.Find("#noteDate")
 				noteDateString, err := noteDate.Text()
@@ -209,10 +209,23 @@ var _ = Describe("Note", func() {
 				Expect(err).To(Succeed())
 				Expect(comment3).To(Equal("評論3"))
 			})
+			//FIt("could create note", func() {
+			//	Expect(page.Navigate(rootURL)).To(Succeed())
+			//	By("click new Note button", func() {
+			//		Expect(page.Find("#newNoteBtn").Click()).To(Succeed())
+			//		noteItem1 := page.All(".noteItem").At(0)
+			//		text, err := noteItem1.Text()
+			//		Expect(err).To(Succeed())
+			//		Expect(text).To(Equal("new note"))
+			//		noteTitle, err := page.Find("#noteTitle").Text()
+			//		Expect(err).To(Succeed())
+			//		Expect(noteTitle).To(Equal("new note"))
+			//	})
+			//})
 		})
 		Context("note list", func() {
 			It("should show note title.", func() {
-				store.notes = map[int]Note{1: {Title: "title1"}}
+				store.notes = []Note{{Title: "title1"}}
 				Expect(page.Navigate(rootURL)).To(Succeed())
 				noteItems := page.All(".noteItem")
 				note1Title, err := noteItems.At(0).Text()
@@ -220,7 +233,7 @@ var _ = Describe("Note", func() {
 				Expect(note1Title).To(Equal("title1"))
 			})
 			It("should show the latest note title", func() {
-				store.notes = map[int]Note{1: {Title: "title1"}}
+				store.notes = []Note{{Title: "title1"}}
 				Expect(page.Navigate(rootURL)).To(Succeed())
 				title := page.Find("#noteTitle")
 				Expect(title.Click()).To(Succeed())
@@ -234,7 +247,7 @@ var _ = Describe("Note", func() {
 				Expect(note1Title).To(Equal("my title2"))
 			})
 			It("should remember edited notes title", func() {
-				store.notes = map[int]Note{1: {Title: "title1"}}
+				store.notes = []Note{{Title: "title1"}}
 				Expect(page.Navigate(rootURL)).To(Succeed())
 				title := page.Find("#noteTitle")
 				Expect(title.Click()).To(Succeed())

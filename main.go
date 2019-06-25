@@ -14,31 +14,34 @@ func main() {
 }
 
 type InMemoryStore struct {
-	notes map[int]Note
+	notes   []Note
+	lastKey int
 }
 
 func (i *InMemoryStore) CreateNote(note Note) {
-	panic("implement me")
+	i.notes = append(i.notes, note)
+	i.lastKey++
 }
 
 func (i *InMemoryStore) GetNoteList() []Note {
-	var notes []Note
-	for _, note := range i.notes {
-		notes = append(notes, note)
-	}
-	return notes
+	return i.notes
 }
 
 func NewInMemoryStore() *InMemoryStore {
 	return &InMemoryStore{
-		notes: make(map[int]Note),
+		lastKey: 1,
 	}
 }
 
 func (i *InMemoryStore) SetNote(id int, note Note) {
-	i.notes[id] = note
+	if id >= 1 {
+		i.notes[id-1] = note
+	}
 }
 
 func (i *InMemoryStore) GetNote(id int) Note {
-	return i.notes[id]
+	if id >= 1 && len(i.notes) >= id {
+		return i.notes[id-1]
+	}
+	return Note{}
 }

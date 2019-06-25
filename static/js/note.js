@@ -11,6 +11,13 @@ $(window).bind("load", function () {
     $('#button64').click(function () {
         genGrids(64)
     });
+    $('#newNoteBtn').click(function () {
+        newNote();
+        genGrids(8);
+        getNoteList();
+        var noteId = $('.noteItem')[0].value;
+        $('noteId').attr("value", noteId);
+    });
 
     var number = 8;
     genGrids(number);
@@ -33,6 +40,15 @@ $(window).bind("load", function () {
 function getHost() {
     u = new URL(window.location.href);
     return u.origin
+}
+
+function newNote() {
+    fetch(getHost()+"/api/note/",
+        {
+            method: "POST",
+            body:JSON.stringify({Title: "new note"}),
+        }
+    )
 }
 
 function getNoteList() {

@@ -3,7 +3,9 @@
   <component name="ChangeListManager">
     <list default="true" id="1a4deb7b-744c-4dc9-a072-429a397a11ae" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main.go" beforeDir="false" afterPath="$PROJECT_DIR$/main.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/note_test.go" beforeDir="false" afterPath="$PROJECT_DIR$/note_test.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server.go" beforeDir="false" afterPath="$PROJECT_DIR$/server.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/static/js/note.js" beforeDir="false" afterPath="$PROJECT_DIR$/static/js/note.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/view/note.html" beforeDir="false" afterPath="$PROJECT_DIR$/view/note.html" afterDir="false" />
     </list>
@@ -18,14 +20,13 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/note_test.go">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="571">
-              <caret line="219" column="50" selection-start-line="219" selection-start-column="50" selection-end-line="219" selection-end-column="50" />
+            <state relative-caret-position="520">
+              <caret line="249" selection-start-line="249" selection-end-line="249" />
               <folding>
                 <element signature="e#14#139#0" expanded="true" />
-                <element signature="e#636#6986#0" />
               </folding>
             </state>
           </provider>
@@ -34,8 +35,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/view/note.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="571">
-              <caret line="33" column="29" selection-start-line="33" selection-start-column="29" selection-end-line="33" selection-end-column="29" />
+            <state relative-caret-position="220">
+              <caret line="14" column="55" selection-start-line="14" selection-start-column="55" selection-end-line="14" selection-end-column="55" />
               <folding>
                 <element signature="n#style#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
               </folding>
@@ -46,13 +47,13 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/static/js/note.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="470">
-              <caret line="36" lean-forward="true" selection-start-line="36" selection-end-line="36" />
+            <state relative-caret-position="162">
+              <caret line="18" column="40" selection-start-line="18" selection-start-column="40" selection-end-line="18" selection-end-column="40" />
               <folding>
-                <element signature="n#!!block;n#getNoteId#0" />
+                <element signature="n#!!block;n#f#0" />
+                <element signature="n#!!block;n#f#0" />
                 <element signature="n#!!block;n#updateNote#0" />
                 <element signature="n#!!block;n#getNote#0" />
-                <element signature="n#!!block;n#genGrids#0" />
                 <element signature="n#!!block;n#getColumnRowNums#0" />
                 <element signature="n#!!block;n#getCurrentDate#0" />
               </folding>
@@ -69,14 +70,13 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/server.go">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="324">
-              <caret line="18" column="12" selection-start-line="18" selection-start-column="12" selection-end-line="18" selection-end-column="12" />
+            <state relative-caret-position="493">
+              <caret line="92" selection-start-line="92" selection-end-line="92" />
               <folding>
                 <element signature="e#14#53#0" expanded="true" />
-                <element signature="e#978#1431#0" />
               </folding>
             </state>
           </provider>
@@ -85,8 +85,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/server_test.go">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1323">
-              <caret line="55" column="44" selection-start-line="55" selection-start-column="44" selection-end-line="55" selection-end-column="44" />
+            <state relative-caret-position="297">
+              <caret line="19" column="20" selection-start-line="19" selection-start-column="20" selection-end-line="19" selection-end-column="20" />
               <folding>
                 <element signature="e#14#146#0" expanded="true" />
               </folding>
@@ -97,8 +97,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/main.go">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="561">
-              <caret line="36" lean-forward="true" selection-start-line="36" selection-end-line="36" />
+            <state relative-caret-position="108">
+              <caret line="4" selection-start-line="4" selection-end-line="4" />
             </state>
           </provider>
         </entry>
@@ -138,14 +138,14 @@
         <option value="$PROJECT_DIR$/static/js/noteList.js" />
         <option value="$PROJECT_DIR$/static/css/noteList.css" />
         <option value="$PROJECT_DIR$/noteList_test.go" />
-        <option value="$PROJECT_DIR$/main.go" />
         <option value="$PROJECT_DIR$/view/noteList.html" />
         <option value="$PROJECT_DIR$/static/css/note.css" />
-        <option value="$PROJECT_DIR$/server.go" />
-        <option value="$PROJECT_DIR$/server_test.go" />
         <option value="$PROJECT_DIR$/static/js/note.js" />
+        <option value="$PROJECT_DIR$/server_test.go" />
         <option value="$PROJECT_DIR$/view/note.html" />
         <option value="$PROJECT_DIR$/note_test.go" />
+        <option value="$PROJECT_DIR$/main.go" />
+        <option value="$PROJECT_DIR$/server.go" />
       </list>
     </option>
   </component>
@@ -237,7 +237,23 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Go Test.Test_Server_can_get_list_of_notes in onePage">
+  <component name="RunManager" selected="Go Build.go build main.go">
+    <configuration name="go build main.go" type="GoApplicationRunConfiguration" factoryName="Go Application" temporary="true" nameIsGenerated="true">
+      <module name="onePage" />
+      <working_directory value="$PROJECT_DIR$" />
+      <kind value="FILE" />
+      <filePath value="$PROJECT_DIR$/main.go" />
+      <method v="2" />
+    </configuration>
+    <configuration name="Test_Server_can_create_new_note in onePage" type="GoTestRunConfiguration" factoryName="Go Test" temporary="true" nameIsGenerated="true">
+      <module name="onePage" />
+      <working_directory value="$PROJECT_DIR$" />
+      <framework value="gotest" />
+      <kind value="PACKAGE" />
+      <package value="onePage" />
+      <pattern value="^Test_Server_can_create_new_note$" />
+      <method v="2" />
+    </configuration>
     <configuration name="Test_Server_can_get_list_of_notes in onePage" type="GoTestRunConfiguration" factoryName="Go Test" temporary="true" nameIsGenerated="true">
       <module name="onePage" />
       <working_directory value="$PROJECT_DIR$" />
@@ -245,24 +261,6 @@
       <kind value="PACKAGE" />
       <package value="onePage" />
       <pattern value="^Test_Server_can_get_list_of_notes$" />
-      <method v="2" />
-    </configuration>
-    <configuration name="Test_Server_can_get_note_list in onePage" type="GoTestRunConfiguration" factoryName="Go Test" temporary="true" nameIsGenerated="true">
-      <module name="onePage" />
-      <working_directory value="$PROJECT_DIR$" />
-      <framework value="gotest" />
-      <kind value="PACKAGE" />
-      <package value="onePage" />
-      <pattern value="^Test_Server_can_get_note_list$" />
-      <method v="2" />
-    </configuration>
-    <configuration name="Test_Server_can_get_other_note in onePage" type="GoTestRunConfiguration" factoryName="Go Test" temporary="true" nameIsGenerated="true">
-      <module name="onePage" />
-      <working_directory value="$PROJECT_DIR$" />
-      <framework value="gotest" />
-      <kind value="PACKAGE" />
-      <package value="onePage" />
-      <pattern value="^Test_Server_can_get_other_note$" />
       <method v="2" />
     </configuration>
     <configuration name="Test_Server_can_store_other_note in onePage" type="GoTestRunConfiguration" factoryName="Go Test" temporary="true" nameIsGenerated="true">
@@ -284,30 +282,15 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Go Build.go build main.go" />
+        <item itemvalue="Go Test.Test_Server_can_create_new_note in onePage" />
         <item itemvalue="Go Test.Test_Server_can_get_list_of_notes in onePage" />
-        <item itemvalue="Go Test.go test onePage" />
-        <item itemvalue="Go Test.Test_Server_can_get_note_list in onePage" />
         <item itemvalue="Go Test.Test_Server_can_store_other_note in onePage" />
-        <item itemvalue="Go Test.Test_Server_can_get_other_note in onePage" />
+        <item itemvalue="Go Test.go test onePage" />
       </list>
     </recent_temporary>
   </component>
   <component name="TestHistory">
-    <history-entry file="Test_Server_can_store_other_note_in_onePage - 2019.06.20 at 17h 23m 56s.xml">
-      <configuration name="Test_Server_can_store_other_note in onePage" configurationId="GoTestRunConfiguration" />
-    </history-entry>
-    <history-entry file="Test_Server_can_store_other_note_in_onePage - 2019.06.20 at 17h 24m 23s.xml">
-      <configuration name="Test_Server_can_store_other_note in onePage" configurationId="GoTestRunConfiguration" />
-    </history-entry>
-    <history-entry file="Test_Server_can_get_note_list_in_onePage - 2019.06.21 at 12h 39m 13s.xml">
-      <configuration name="Test_Server_can_get_note_list in onePage" configurationId="GoTestRunConfiguration" />
-    </history-entry>
-    <history-entry file="go_test_onePage - 2019.06.21 at 12h 40m 36s.xml">
-      <configuration name="go test onePage" configurationId="GoTestRunConfiguration" />
-    </history-entry>
-    <history-entry file="go_test_onePage - 2019.06.21 at 12h 41m 37s.xml">
-      <configuration name="go test onePage" configurationId="GoTestRunConfiguration" />
-    </history-entry>
     <history-entry file="Test_Server_can_get_list_of_notes_in_onePage - 2019.06.24 at 12h 40m 55s.xml">
       <configuration name="Test_Server_can_get_list_of_notes in onePage" configurationId="GoTestRunConfiguration" />
     </history-entry>
@@ -323,10 +306,24 @@
     <history-entry file="Test_Server_can_get_list_of_notes_in_onePage - 2019.06.24 at 12h 45m 21s.xml">
       <configuration name="Test_Server_can_get_list_of_notes in onePage" configurationId="GoTestRunConfiguration" />
     </history-entry>
+    <history-entry file="Test_Server_can_get_list_of_notes_in_onePage - 2019.06.24 at 13h 53m 24s.xml">
+      <configuration name="Test_Server_can_get_list_of_notes in onePage" configurationId="GoTestRunConfiguration" />
+    </history-entry>
+    <history-entry file="Test_Server_can_store_other_note_in_onePage - 2019.06.24 at 13h 53m 33s.xml">
+      <configuration name="Test_Server_can_store_other_note in onePage" configurationId="GoTestRunConfiguration" />
+    </history-entry>
+    <history-entry file="Test_Server_can_get_list_of_notes_in_onePage - 2019.06.24 at 13h 53m 47s.xml">
+      <configuration name="Test_Server_can_get_list_of_notes in onePage" configurationId="GoTestRunConfiguration" />
+    </history-entry>
+    <history-entry file="Test_Server_can_create_new_note_in_onePage - 2019.06.24 at 17h 10m 02s.xml">
+      <configuration name="Test_Server_can_create_new_note in onePage" configurationId="GoTestRunConfiguration" />
+    </history-entry>
+    <history-entry file="Test_Server_can_create_new_note_in_onePage - 2019.06.24 at 17h 16m 29s.xml">
+      <configuration name="Test_Server_can_create_new_note in onePage" configurationId="GoTestRunConfiguration" />
+    </history-entry>
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="32" width="1936" height="1056" extended-state="6" />
-    <editor active="true" />
     <layout>
       <window_info content_ui="combo" id="Project" order="0" weight="0.25107068" />
       <window_info id="Favorites" order="1" side_tool="true" weight="0.32976446" />
@@ -341,7 +338,7 @@
       <window_info anchor="bottom" id="Docker" order="7" show_stripe_button="false" />
       <window_info anchor="bottom" id="Version Control" order="8" />
       <window_info anchor="bottom" id="Database Changes" order="9" />
-      <window_info active="true" anchor="bottom" id="Terminal" order="10" sideWeight="0.49946466" visible="true" weight="0.27323008" />
+      <window_info active="true" anchor="bottom" id="Terminal" order="10" sideWeight="0.49946466" visible="true" weight="0.35951328" />
       <window_info anchor="bottom" id="Event Log" order="11" sideWeight="0.5005353" side_tool="true" weight="0.23893805" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
@@ -374,8 +371,6 @@
     <option name="version" value="1" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="change to using jquery to create baseGrid." />
-    <MESSAGE value="let base grid has blue keyword and red comment." />
     <MESSAGE value="add button to change 格數." />
     <MESSAGE value="refactor" />
     <MESSAGE value="let noteDate can be chnaged." />
@@ -399,20 +394,15 @@
     <MESSAGE value="note list page can get all note list;" />
     <MESSAGE value="remove note list page." />
     <MESSAGE value="改回成用根目錄，當作note頁面。 要讓操作頁面只有在home這頁而已。" />
-    <option name="LAST_COMMIT_MESSAGE" value="改回成用根目錄，當作note頁面。 要讓操作頁面只有在home這頁而已。" />
+    <MESSAGE value="改變title可以讓note list上面的title也改變" />
+    <MESSAGE value="server can post to create new note;" />
+    <option name="LAST_COMMIT_MESSAGE" value="server can post to create new note;" />
   </component>
   <component name="VgoProject">
     <integration-enabled>true</integration-enabled>
     <proxy>direct</proxy>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://C:/Go/src/net/http/server.go">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="178">
-          <caret line="1745" selection-start-line="1745" selection-end-line="1745" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/onePage_suite_test.go">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-299">
@@ -444,13 +434,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/main.go">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="561">
-          <caret line="36" lean-forward="true" selection-start-line="36" selection-end-line="36" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/static/js/noteList.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="270">
@@ -468,59 +451,71 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/server.go">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="324">
-          <caret line="18" column="12" selection-start-line="18" selection-start-column="12" selection-end-line="18" selection-end-column="12" />
-          <folding>
-            <element signature="e#14#53#0" expanded="true" />
-            <element signature="e#978#1431#0" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/server_test.go">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1323">
-          <caret line="55" column="44" selection-start-line="55" selection-start-column="44" selection-end-line="55" selection-end-column="44" />
+        <state relative-caret-position="297">
+          <caret line="19" column="20" selection-start-line="19" selection-start-column="20" selection-end-line="19" selection-end-column="20" />
           <folding>
             <element signature="e#14#146#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/static/js/note.js">
+    <entry file="file://C:/Go/src/net/http/server.go">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="470">
-          <caret line="36" lean-forward="true" selection-start-line="36" selection-end-line="36" />
+        <state relative-caret-position="182">
+          <caret line="2850" selection-start-line="2850" selection-end-line="2850" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/main.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="108">
+          <caret line="4" selection-start-line="4" selection-end-line="4" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/note_test.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="520">
+          <caret line="249" selection-start-line="249" selection-end-line="249" />
           <folding>
-            <element signature="n#!!block;n#getNoteId#0" />
-            <element signature="n#!!block;n#updateNote#0" />
-            <element signature="n#!!block;n#getNote#0" />
-            <element signature="n#!!block;n#genGrids#0" />
-            <element signature="n#!!block;n#getColumnRowNums#0" />
-            <element signature="n#!!block;n#getCurrentDate#0" />
+            <element signature="e#14#139#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/view/note.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="571">
-          <caret line="33" column="29" selection-start-line="33" selection-start-column="29" selection-end-line="33" selection-end-column="29" />
+        <state relative-caret-position="220">
+          <caret line="14" column="55" selection-start-line="14" selection-start-column="55" selection-end-line="14" selection-end-column="55" />
           <folding>
             <element signature="n#style#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/note_test.go">
+    <entry file="file://$PROJECT_DIR$/static/js/note.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="571">
-          <caret line="219" column="50" selection-start-line="219" selection-start-column="50" selection-end-line="219" selection-end-column="50" />
+        <state relative-caret-position="162">
+          <caret line="18" column="40" selection-start-line="18" selection-start-column="40" selection-end-line="18" selection-end-column="40" />
           <folding>
-            <element signature="e#14#139#0" expanded="true" />
-            <element signature="e#636#6986#0" />
+            <element signature="n#!!block;n#f#0" />
+            <element signature="n#!!block;n#f#0" />
+            <element signature="n#!!block;n#updateNote#0" />
+            <element signature="n#!!block;n#getNote#0" />
+            <element signature="n#!!block;n#getColumnRowNums#0" />
+            <element signature="n#!!block;n#getCurrentDate#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/server.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="493">
+          <caret line="92" selection-start-line="92" selection-end-line="92" />
+          <folding>
+            <element signature="e#14#53#0" expanded="true" />
           </folding>
         </state>
       </provider>

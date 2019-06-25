@@ -70,8 +70,11 @@ func (s *OnePageNoteServer) note(w http.ResponseWriter, r *http.Request) {
 			if err != nil {
 				w.WriteHeader(http.StatusBadRequest)
 			} else {
+				if len(s.store.GetNoteList()) == 0 {
+					s.store.CreateNote(note)
+				}
 				s.store.SetNote(id, note)
-				fmt.Println("set note ", id, "to ", note)
+				//fmt.Println("set note ", id, "to ", note)
 				w.WriteHeader(http.StatusOK)
 			}
 			return
@@ -82,10 +85,12 @@ func (s *OnePageNoteServer) note(w http.ResponseWriter, r *http.Request) {
 		if len(idString) == 0 {
 			var notes = s.store.GetNoteList()
 			err := json.NewEncoder(w).Encode(notes)
-			fmt.Println("get note list", notes)
 			if err != nil {
+				fmt.Println(err.Error())
 				w.WriteHeader(http.StatusBadRequest)
 				return
+			} else {
+				fmt.Println("get note list", notes)
 			}
 		} else {
 			id, err := strconv.Atoi(idString)
