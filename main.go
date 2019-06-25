@@ -18,13 +18,19 @@ type InMemoryStore struct {
 	lastKey int
 }
 
-func (i *InMemoryStore) CreateNote(note Note) {
+func (i *InMemoryStore) CreateNote(note Note) int {
+	note.Id = i.lastKey
 	i.notes = append(i.notes, note)
 	i.lastKey++
+	return note.Id
 }
 
-func (i *InMemoryStore) GetNoteList() []Note {
-	return i.notes
+func (m *InMemoryStore) GetNoteList() []Note {
+	var notes []Note
+	for i := len(m.notes) - 1; i >= 0; i-- {
+		notes = append(notes, m.notes[i])
+	}
+	return notes
 }
 
 func NewInMemoryStore() *InMemoryStore {

@@ -1,3 +1,7 @@
+var currentNote;
+var noteList;
+var currentNoteId = undefined;
+
 $(window).bind("load", function () {
     $('#button8').click(function () {
         genGrids(8)
@@ -15,8 +19,6 @@ $(window).bind("load", function () {
         newNote();
         genGrids(8);
         getNoteList();
-        var noteId = $('.noteItem')[0].value;
-        $('noteId').attr("value", noteId);
     });
 
     var number = 8;
@@ -43,17 +45,32 @@ function getHost() {
 }
 
 function newNote() {
-    fetch(getHost()+"/api/note/",
+    fetch(getHost() + "/api/note/",
         {
             method: "POST",
-            body:JSON.stringify({Title: "new note"}),
+            body: JSON.stringify({Title: "new note"}),
         }
     )
+        .then(function (response) {
+            return response.json();
+        })
+        .then(function (js) {
+            console.log("newNote return ",js);
+            // if (!isNaN(js.Id)) {
+            //     console.log("isNaN(Id)= ", isNaN(js.Id));
+            //     currentNoteId = js.Id;
+            // }
+            currentNote = js;
+            currentNoteId = js.Id;
+            $('#noteTitle').html("new note");
+            var today = getCurrentDate();
+            $('#noteDate').html(today);
+        })
 }
 
 function getNoteList() {
-    fetch(getHost()+"/api/note/",
-        {method:'GET'})
+    fetch(getHost() + "/api/note/",
+        {method: 'GET'})
         .then(function (response) {
             return response.json()
         })
@@ -61,19 +78,23 @@ function getNoteList() {
             var tmp = $('#noteItemTemplate').html();
             var count = 0;
             $('.noteItem').remove();
-            for(item in js) {
+            for (item in js) {
                 $('#noteListItems').append(tmp);
-                count ++;
+                count++;
             }
-            for(i=0;i<count;i++){
+            for (i = 0; i < count; i++) {
                 $('.noteItem')[i].innerHTML = js[i].Title;
             }
         });
 }
 
 function getNoteId() {
-    return $('#noteId').attr("value");
+    if (currentNoteId === undefined) {
+        currentNoteId = $('#noteId').attr("value");
+    }
+    return currentNoteId;
 }
+
 function updateNote() {
     d = new Date($('#noteDate').html());
     title = $('#noteTitle').html();
@@ -105,38 +126,42 @@ function updateNote() {
     return {d, note};
 }
 
-var t;
+function renderNote() {
+    if (currentNote.Date !== null) {
+        d = FormatDate(new Date(currentNote.Date));
+        $('#noteDate').html(d);
+        $('#noteTitle').html(currentNote.Title);
+        if (currentNote.Grids !== undefined) {
+            for (i = 0; i < currentNote.Grids.length; i++) {
+                let grid = currentNote.Grids[i];
+                var keyword = grid.Keyword;
+                var comment = grid.Comment;
+                if (keyword !== undefined) {
+                    $('.keyword')[i].innerHTML = keyword
+                }
+                if (comment !== undefined) {
+                    $('.comment')[i].innerHTML = comment
+                }
+            }
+        }
+
+    }
+}
 
 function getNote() {
     var note = {"Date": "0000-00-00"};
-    fetch(getHost() + '/api/note/'+getNoteId(), {method: 'GET'})
+    fetch(getHost() + '/api/note/' + getNoteId(), {method: 'GET'})
         .then(function (response) {
             return response.json();
         })
         .then(function (js) {
             note = js;
-            if (note.Date !== null) {
-                d = FormatDate(new Date(note.Date));
-                $('#noteDate').html(d);
-                $('#noteTitle').html(note.Title);
-                if (note.Grids !== undefined) {
-                    for (i = 0; i < note.Grids.length; i++) {
-                        let grid = note.Grids[i];
-                        var keyword = grid.Keyword;
-                        var comment = grid.Comment;
-                        if (keyword !== undefined) {
-                            $('.keyword')[i].innerHTML = keyword
-                        }
-                        if (comment !== undefined) {
-                            $('.comment')[i].innerHTML = comment
-                        }
-                    }
-                }
-
-            }
+            currentNote = note;
+            renderNote();
         });
 }
 
+//generate note grids
 function genGrids(number) {
     $('.baseGrid').remove();
 

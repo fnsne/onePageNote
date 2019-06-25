@@ -209,19 +209,19 @@ var _ = Describe("Note", func() {
 				Expect(err).To(Succeed())
 				Expect(comment3).To(Equal("評論3"))
 			})
-			//FIt("could create note", func() {
-			//	Expect(page.Navigate(rootURL)).To(Succeed())
-			//	By("click new Note button", func() {
-			//		Expect(page.Find("#newNoteBtn").Click()).To(Succeed())
-			//		noteItem1 := page.All(".noteItem").At(0)
-			//		text, err := noteItem1.Text()
-			//		Expect(err).To(Succeed())
-			//		Expect(text).To(Equal("new note"))
-			//		noteTitle, err := page.Find("#noteTitle").Text()
-			//		Expect(err).To(Succeed())
-			//		Expect(noteTitle).To(Equal("new note"))
-			//	})
-			//})
+			It("could create note", func() {
+				Expect(page.Navigate(rootURL)).To(Succeed())
+				By("click new Note button", func() {
+					Expect(page.Find("#newNoteBtn").Click()).To(Succeed())
+					noteItem1 := page.All(".noteItem").At(0)
+					text, err := noteItem1.Text()
+					Expect(err).To(Succeed())
+					Expect(text).To(Equal("new note"))
+					noteTitle, err := page.Find("#noteTitle").Text()
+					Expect(err).To(Succeed())
+					Expect(noteTitle).To(Equal("new note"))
+				})
+			})
 		})
 		Context("note list", func() {
 			It("should show note title.", func() {

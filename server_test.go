@@ -16,8 +16,9 @@ type StubStore struct {
 	notes map[int]Note
 }
 
-func (s *StubStore) CreateNote(note Note) {
+func (s *StubStore) CreateNote(note Note) int {
 	s.notes[5] = note
+	return 5
 }
 
 func (s *StubStore) GetNoteList() []Note {
