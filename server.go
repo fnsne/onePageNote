@@ -39,10 +39,14 @@ func NewOnePageNoteServer(store Store) *OnePageNoteServer {
 	server.store = store
 	return server
 }
-func (receiver OnePageNoteServer) homePage(w http.ResponseWriter, r *http.Request) {
+func (s *OnePageNoteServer) homePage(w http.ResponseWriter, r *http.Request) {
 	if r.Method == http.MethodGet {
 		tmp, _ := template.ParseFiles("view/note.html")
+		notes := s.store.GetNoteList()
 		currentNoteId := 1
+		if len(notes) != 0 {
+			currentNoteId = notes[len(notes)-1].Id
+		}
 		tmp.Execute(w, currentNoteId)
 	}
 }
@@ -54,7 +58,6 @@ func (s *OnePageNoteServer) createNote(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	id := s.store.CreateNote(note)
-	fmt.Println("id = ", id)
 	w.WriteHeader(http.StatusOK)
 	note.Id = id
 	err = json.NewEncoder(w).Encode(&note)

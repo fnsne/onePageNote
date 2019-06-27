@@ -5,28 +5,37 @@ import (
 	. "github.com/onsi/gomega"
 	"github.com/sclevine/agouti"
 	"net/http/httptest"
+	"testing"
 	"time"
 )
 
 var _ = Describe("Note", func() {
 	var page *agouti.Page
 	var rootURL string
-	var store *InMemoryStore
+	var store *FileSystemStore
+	var server *httptest.Server
+	var cleanDatabase func()
 
 	BeforeEach(func() {
 		var err error
 		page, err = agoutiDriver.NewPage()
 		Expect(err).NotTo(HaveOccurred())
 
-		store = NewInMemoryStore()
+		//store = NewInMemoryStore()
+		//database, _ := os.OpenFile(path, os.O_RDWR|os.O_CREATE, 0666)
+		var t *testing.T
+		database, clean := createTempFile(t, []byte("[]"))
+		cleanDatabase = clean
+		store = NewFileSystemStore(database)
 		onePageNoteServer := NewOnePageNoteServer(store)
 
-		server := httptest.NewServer(onePageNoteServer)
+		server = httptest.NewServer(onePageNoteServer)
 		rootURL = server.URL
 	})
 
 	AfterEach(func() {
 		Expect(page.Destroy()).To(Succeed())
+		cleanDatabase()
 	})
 	Describe("note view", func() {
 		Context("Get home page", func() {
@@ -94,7 +103,7 @@ var _ = Describe("Note", func() {
 
 			It("will remember stored noteDate", func() {
 				date, _ := time.Parse("2006-01-02", "2018-02-02")
-				store.notes = []Note{{Date: &date}}
+				store.notes = []Note{{Id: 1, Date: &date}}
 				Expect(page.Navigate(rootURL)).To(Succeed())
 				noteDate := page.Find("#noteDate")
 				noteDateString, err := noteDate.Text()
@@ -214,7 +223,9 @@ var _ = Describe("Note", func() {
 				By("click new Note button", func() {
 					Expect(page.Find("#noteTitle").Fill("note 1"))
 					time.Sleep(1 * time.Second)
+					time.Sleep(3 * time.Second)
 					Expect(page.Find("#newNoteBtn").Click()).To(Succeed())
+					time.Sleep(3 * time.Second)
 					noteItem1 := page.All(".noteItem").At(0)
 					text, err := noteItem1.Text()
 					Expect(err).To(Succeed())
@@ -224,7 +235,7 @@ var _ = Describe("Note", func() {
 					Expect(noteTitle).To(Equal("Untitled"))
 				})
 			})
-			FIt("could change note ", func() {
+			It("could change note ", func() {
 				By("click on note list", func() {
 					Expect(page.Navigate(rootURL)).To(Succeed())
 					Expect(page.Find("#noteTitle").Fill("note1"))
@@ -270,7 +281,7 @@ var _ = Describe("Note", func() {
 				Expect(note1Title).To(Equal("title1"))
 			})
 			It("should show the latest note title", func() {
-				store.notes = []Note{{Title: "title1"}}
+				store.notes = []Note{{Id: 1, Title: "title1"}}
 				Expect(page.Navigate(rootURL)).To(Succeed())
 				title := page.Find("#noteTitle")
 				Expect(title.Click()).To(Succeed())
@@ -284,7 +295,7 @@ var _ = Describe("Note", func() {
 				Expect(note1Title).To(Equal("my title2"))
 			})
 			It("should remember edited notes title", func() {
-				store.notes = []Note{{Title: "title1"}}
+				store.notes = []Note{{Id: 1, Title: "title1"}}
 				Expect(page.Navigate(rootURL)).To(Succeed())
 				title := page.Find("#noteTitle")
 				Expect(title.Click()).To(Succeed())
@@ -297,6 +308,11 @@ var _ = Describe("Note", func() {
 				Expect(err).To(Succeed())
 				Expect(note1Title).To(Equal("my title2"))
 			})
+		})
+		Context("others", func() {
+
+			//Test_Server_after_open_will_focus_on_latest_created_note_and_can_continue_edit_it
+			//func Test_Server_after_open_will_focus_on_last_edited_note_and_can_continue_edit_it(t *testing.T) {
 		})
 	})
 })
