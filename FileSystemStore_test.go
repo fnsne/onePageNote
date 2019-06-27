@@ -8,15 +8,24 @@ import (
 )
 
 func Test_filesystemStore_can_get_note(t *testing.T) {
-
 	tempFile, clean := createTempFile(t, []byte(`[{"Id":1, "Title":"title1"}]`))
-
 	defer clean()
 
 	store := NewFileSystemStore(tempFile)
 	note := store.GetNote(1)
 	assert.Equal(t, 1, note.Id)
 	assert.Equal(t, "title1", note.Title)
+}
+
+func Test_filesystemStore_can_set_note(t *testing.T) {
+	tempFile, clean := createTempFile(t, []byte(`[{"Id":1, "Title":"title1"}]`))
+	defer clean()
+
+	store := NewFileSystemStore(tempFile)
+	note := Note{Id:1, Title:"aaa"}
+	store.SetNote(1, note)
+	n := store.GetNote(1)
+	assert.Equal(t, "aaa", n.Title)
 }
 
 func createTempFile(t *testing.T, initialData []byte) (*os.File, func()) {
