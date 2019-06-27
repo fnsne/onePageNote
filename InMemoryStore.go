@@ -1,4 +1,4 @@
-package main
+package onePageNote
 
 type InMemoryStore struct {
 	notes   []Note
