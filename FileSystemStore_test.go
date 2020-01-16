@@ -1,4 +1,4 @@
-package onePageNote
+package onePage
 
 import (
 	"github.com/stretchr/testify/assert"
@@ -22,7 +22,7 @@ func Test_filesystemStore_can_set_note(t *testing.T) {
 	defer clean()
 
 	store := NewFileSystemStore(tempFile)
-	note := Note{Id:1, Title:"aaa"}
+	note := Note{Id: 1, Title: "aaa"}
 	store.SetNote(1, note)
 	n := store.GetNote(1)
 	assert.Equal(t, "aaa", n.Title)

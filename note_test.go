@@ -1,4 +1,4 @@
-package onePageNote
+package onePage
 
 import (
 	. "github.com/onsi/ginkgo"

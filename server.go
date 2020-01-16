@@ -1,4 +1,4 @@
-package onePageNote
+package onePage
 
 import (
 	"encoding/json"
