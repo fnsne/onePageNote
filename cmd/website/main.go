@@ -1,7 +1,6 @@
 package main
 
 import (
-	"fmt"
 	"net/http"
 	"onePage"
 	"os"
@@ -12,7 +11,7 @@ const path = "notes.db.json"
 func main() {
 	db, err := os.OpenFile(path, os.O_RDWR|os.O_CREATE, 0666)
 	if err != nil {
-		fmt.Errorf("probilem opening %s %v", path, err)
+		panic("problem opening " + path + " " + err.Error())
 	}
 	store := onePage.NewFileSystemStore(db)
 	server := onePage.NewOnePageNoteServer(store)
