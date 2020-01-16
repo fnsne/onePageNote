@@ -18,7 +18,7 @@ func main() {
 	if err != nil {
 		panic(err)
 	}
-	ui.Load("localhost:7000")
+	_ = ui.Load("localhost:7000")
 
 	<-ui.Done()
 }

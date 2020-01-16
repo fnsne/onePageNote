@@ -7,4 +7,15 @@
     - [ ] can circle on the great answer
     - [ ] can add arrow to associate boxes
     - [ ] can add description of the arrow
+    
 - [ ] Logic-3
+
+- [ ] 底層
+    - [X] 資料庫使用json檔
+    - [ ] 資料庫使用levelDB
+
+## Install Latest Version
+```shell script
+
+
+```
