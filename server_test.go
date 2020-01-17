@@ -37,7 +37,7 @@ func (s *StubStore) CreateNote(note Note) int {
 
 type ServerTests struct {
 	suite.Suite
-	server *OnePageNoteServer
+	server *NoteServer
 	store  *StubStore
 }
 

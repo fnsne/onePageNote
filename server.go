@@ -22,13 +22,13 @@ type Note struct {
 	Grids []Grid
 }
 
-type OnePageNoteServer struct {
+type NoteServer struct {
 	store Store
 	http.Handler
 }
 
-func NewOnePageNoteServer(store Store) *OnePageNoteServer {
-	server := new(OnePageNoteServer)
+func NewOnePageNoteServer(store Store) *NoteServer {
+	server := new(NoteServer)
 
 	router := http.NewServeMux()
 	router.Handle("/", http.HandlerFunc(server.homePage))
@@ -40,7 +40,7 @@ func NewOnePageNoteServer(store Store) *OnePageNoteServer {
 	return server
 }
 
-func (s *OnePageNoteServer) homePage(w http.ResponseWriter, r *http.Request) {
+func (s *NoteServer) homePage(w http.ResponseWriter, r *http.Request) {
 	if r.Method == http.MethodGet {
 		tmp, _ := template.ParseFiles("view/note.html")
 		notes := s.store.GetNoteList()
@@ -52,7 +52,7 @@ func (s *OnePageNoteServer) homePage(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
-func (s *OnePageNoteServer) updateNote(w http.ResponseWriter, r *http.Request) {
+func (s *NoteServer) updateNote(w http.ResponseWriter, r *http.Request) {
 	id, _ := strconv.Atoi(getNoteId(r))
 	var note Note
 	_ = json.NewDecoder(r.Body).Decode(&note)
@@ -63,7 +63,7 @@ func (s *OnePageNoteServer) updateNote(w http.ResponseWriter, r *http.Request) {
 	w.WriteHeader(http.StatusOK)
 }
 
-func (s *OnePageNoteServer) retrieveNote(w http.ResponseWriter, r *http.Request) {
+func (s *NoteServer) retrieveNote(w http.ResponseWriter, r *http.Request) {
 	id, _ := strconv.Atoi(getNoteId(r))
 	err := json.NewEncoder(w).Encode(s.store.GetNote(id))
 	if err != nil {
@@ -73,7 +73,7 @@ func (s *OnePageNoteServer) retrieveNote(w http.ResponseWriter, r *http.Request)
 	return
 }
 
-func (s *OnePageNoteServer) listNote(w http.ResponseWriter) {
+func (s *NoteServer) listNote(w http.ResponseWriter) {
 	var notes = s.store.GetNoteList()
 	err := json.NewEncoder(w).Encode(notes)
 	if err != nil {
@@ -83,7 +83,7 @@ func (s *OnePageNoteServer) listNote(w http.ResponseWriter) {
 	return
 }
 
-func (s *OnePageNoteServer) createNote(w http.ResponseWriter, r *http.Request) {
+func (s *NoteServer) createNote(w http.ResponseWriter, r *http.Request) {
 	var note Note
 	_ = json.NewDecoder(r.Body).Decode(&note)
 	id := s.store.CreateNote(note)
@@ -97,7 +97,7 @@ func (s *OnePageNoteServer) createNote(w http.ResponseWriter, r *http.Request) {
 	return
 }
 
-func (s *OnePageNoteServer) note(w http.ResponseWriter, r *http.Request) {
+func (s *NoteServer) note(w http.ResponseWriter, r *http.Request) {
 	if requestHasId(r) {
 		if r.Method == http.MethodGet {
 			confirmId(s.retrieveNote)(w, r)
