@@ -48,26 +48,19 @@ func (s *OnePageNoteServer) homePage(w http.ResponseWriter, r *http.Request) {
 		if len(notes) != 0 {
 			currentNoteId = notes[len(notes)-1].Id
 		}
-		tmp.Execute(w, currentNoteId)
+		_ = tmp.Execute(w, currentNoteId)
 	}
 }
 
 func (s *OnePageNoteServer) updateNote(w http.ResponseWriter, r *http.Request) {
 	id, _ := strconv.Atoi(getNoteId(r))
 	var note Note
-	err := json.NewDecoder(r.Body).Decode(&note)
-	if err != nil {
-		w.WriteHeader(http.StatusBadRequest)
-		var p []byte
-		r.Body.Read(p)
-	} else {
-		if len(s.store.GetNoteList()) == 0 {
-			s.store.CreateNote(note)
-		}
-		s.store.SetNote(id, note)
-		w.WriteHeader(http.StatusOK)
+	_ = json.NewDecoder(r.Body).Decode(&note)
+	if len(s.store.GetNoteList()) == 0 {
+		s.store.CreateNote(note)
 	}
-	return
+	s.store.SetNote(id, note)
+	w.WriteHeader(http.StatusOK)
 }
 
 func (s *OnePageNoteServer) retrieveNote(w http.ResponseWriter, r *http.Request) {
@@ -80,7 +73,7 @@ func (s *OnePageNoteServer) retrieveNote(w http.ResponseWriter, r *http.Request)
 	return
 }
 
-func (s *OnePageNoteServer) listNote(w http.ResponseWriter, r *http.Request) {
+func (s *OnePageNoteServer) listNote(w http.ResponseWriter) {
 	var notes = s.store.GetNoteList()
 	err := json.NewEncoder(w).Encode(notes)
 	if err != nil {
@@ -114,7 +107,7 @@ func (s *OnePageNoteServer) note(w http.ResponseWriter, r *http.Request) {
 		}
 	} else {
 		if r.Method == http.MethodGet {
-			s.listNote(w, r)
+			s.listNote(w)
 		}
 		if r.Method == http.MethodPost {
 			confirmInputNote(s.createNote)(w, r)
