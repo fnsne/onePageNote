@@ -3,7 +3,6 @@ package onePage
 import (
 	"bytes"
 	"encoding/json"
-	"fmt"
 	"io"
 	"io/ioutil"
 	"net/http"
@@ -23,7 +22,6 @@ func confirmId(f http.HandlerFunc) http.HandlerFunc {
 		idString := getNoteId(r)
 		_, err := strconv.Atoi(idString)
 		if err != nil {
-			fmt.Println("err= ", err)
 			w.WriteHeader(http.StatusBadRequest)
 			return
 		} else {

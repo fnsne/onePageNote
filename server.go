@@ -2,7 +2,6 @@ package onePage
 
 import (
 	"encoding/json"
-	"fmt"
 	"html/template"
 	"net/http"
 	"strconv"
@@ -85,11 +84,8 @@ func (s *OnePageNoteServer) listNote(w http.ResponseWriter, r *http.Request) {
 	var notes = s.store.GetNoteList()
 	err := json.NewEncoder(w).Encode(notes)
 	if err != nil {
-		fmt.Println(err.Error())
 		w.WriteHeader(http.StatusBadRequest)
 		return
-	} else {
-		fmt.Println("get note list", notes)
 	}
 	return
 }
