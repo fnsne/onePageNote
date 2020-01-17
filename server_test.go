@@ -75,8 +75,29 @@ func (suite *ServerTests) Test_edit_note() {
 	})
 }
 
+func (suite *ServerTests) Test_get_note_list() {
+	notes := []Note{{
+		Id:    1,
+		Date:  nil,
+		Title: "new note",
+		Grids: nil,
+	}}
+	suite.givenNoteList(notes)
+	suite.serverShouldResponseNoteList(notes)
+}
+
+func (suite *ServerTests) serverShouldResponseNoteList(notes []Note) {
+	request := suite.getNoteListRequest()
+	response := suite.processRequest(request)
+
+	assert.Equal(suite.T(), http.StatusOK, response.Code, "")
+	var resNotes []Note
+	_ = json.NewDecoder(response.Body).Decode(&resNotes)
+	assert.Equal(suite.T(), notes, resNotes)
+}
+
 func (suite *ServerTests) serverShouldUpdateNote(note Note) {
-	request := suite.getUpdateRequest(note)
+	request := suite.updateRequest(note)
 	response := suite.processRequest(request)
 
 	assert.Equal(suite.T(), http.StatusOK, response.Code, "")
@@ -93,9 +114,20 @@ func (suite *ServerTests) processRequest(request *http.Request) *httptest.Respon
 	return response
 }
 
-func (suite *ServerTests) getUpdateRequest(note Note) *http.Request {
+func (suite *ServerTests) getNoteListRequest() *http.Request {
+	request := httptest.NewRequest(http.MethodGet, "/api/note/", nil)
+	return request
+}
+
+func (suite *ServerTests) updateRequest(note Note) *http.Request {
 	suite.willUpdateNote(note)
 	request := httptest.NewRequest(http.MethodPost, "/api/note/"+strconv.Itoa(note.Id), suite.marshal(note))
+	return request
+}
+
+func (suite *ServerTests) createNoteRequest(note Note) *http.Request {
+	suite.willCreateNote(note, 0)
+	request := httptest.NewRequest(http.MethodPost, "/api/note/", suite.marshal(note))
 	return request
 }
 
@@ -104,17 +136,11 @@ func (suite *ServerTests) givenNoteList(notes []Note) *mock.Call {
 }
 
 func (suite *ServerTests) serverShouldCreatedNote(note Note, id int) {
-	request := suite.getCreateNoteRequest(note)
+	request := suite.createNoteRequest(note)
 	response := suite.processRequest(request)
 
 	assert.Equal(suite.T(), http.StatusOK, response.Code, "")
 	suite.assertResponseNote(response, id, note)
-}
-
-func (suite *ServerTests) getCreateNoteRequest(note Note) *http.Request {
-	suite.willCreateNote(note, 0)
-	request := httptest.NewRequest(http.MethodPost, "/api/note/", suite.marshal(note))
-	return request
 }
 
 func (suite *ServerTests) assertResponseNote(response *httptest.ResponseRecorder, id int, note Note) {
