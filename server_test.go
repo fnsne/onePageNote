@@ -86,6 +86,38 @@ func (suite *ServerTests) Test_get_note_list() {
 	suite.serverShouldResponseNoteList(notes)
 }
 
+func (suite *ServerTests) Test_retrieve_note_by_id() {
+	note := Note{
+		Id:    5,
+		Date:  nil,
+		Title: "id=5 note",
+		Grids: nil,
+	}
+	suite.givenRetrieveNote(note)
+	suite.serverShouldResponseNoteByRetrieveWithId(5, note)
+}
+
+func (suite *ServerTests) serverShouldResponseNoteByRetrieveWithId(id int, note Note) {
+	request := suite.retrieveNoteById(id)
+	response := suite.processRequest(request)
+
+	assert.Equal(suite.T(), http.StatusOK, response.Code, "")
+
+	var resNote Note
+	_ = json.NewDecoder(response.Body).Decode(&resNote)
+	assert.Equal(suite.T(), note, resNote)
+	suite.store.AssertCalled(suite.T(), "GetNote", id)
+}
+
+func (suite *ServerTests) givenRetrieveNote(note Note) *mock.Call {
+	return suite.store.On("GetNote", 5).Return(note)
+}
+
+func (suite *ServerTests) retrieveNoteById(id int) *http.Request {
+	request := httptest.NewRequest(http.MethodGet, "/api/note/"+strconv.Itoa(id), nil)
+	return request
+}
+
 func (suite *ServerTests) serverShouldResponseNoteList(notes []Note) {
 	request := suite.getNoteListRequest()
 	response := suite.processRequest(request)
