@@ -47,8 +47,8 @@ func (f *FileSystemStore) GetNoteList() []Note {
 }
 
 func (f *FileSystemStore) CreateNote(note Note) int {
-	note.Id = f.lastKey
 	f.lastKey++
+	note.Id = f.lastKey
 	f.notes = append(f.notes, note)
 	f.database.Seek(0, 0)
 	json.NewEncoder(f.database).Encode(&f.notes)

@@ -96,17 +96,12 @@ func (s *OnePageNoteServer) listNote(w http.ResponseWriter, r *http.Request) {
 
 func (s *OnePageNoteServer) createNote(w http.ResponseWriter, r *http.Request) {
 	var note Note
-	err := json.NewDecoder(r.Body).Decode(&note)
-	if err != nil {
-		w.WriteHeader(http.StatusBadRequest)
-		return
-	}
+	_ = json.NewDecoder(r.Body).Decode(&note)
 	id := s.store.CreateNote(note)
 	w.WriteHeader(http.StatusOK)
 	note.Id = id
-	err = json.NewEncoder(w).Encode(&note)
+	err := json.NewEncoder(w).Encode(&note)
 	if err != nil {
-		fmt.Println("err in post to create note return id", err)
 		w.WriteHeader(http.StatusBadRequest)
 		return
 	}
@@ -119,29 +114,14 @@ func (s *OnePageNoteServer) note(w http.ResponseWriter, r *http.Request) {
 			confirmId(s.retrieveNote)(w, r)
 		}
 		if r.Method == http.MethodPost {
-			confirmId(s.updateNote)(w, r)
+			confirmId(confirmInputNote(s.updateNote))(w, r)
 		}
 	} else {
 		if r.Method == http.MethodGet {
 			s.listNote(w, r)
 		}
 		if r.Method == http.MethodPost {
-			s.createNote(w, r)
-		}
-	}
-	w.WriteHeader(http.StatusBadRequest)
-}
-
-func confirmId(f http.HandlerFunc) http.HandlerFunc {
-	return func(w http.ResponseWriter, r *http.Request) {
-		idString := getNoteId(r)
-		_, err := strconv.Atoi(idString)
-		if err != nil {
-			fmt.Println("err= ", err)
-			w.WriteHeader(http.StatusBadRequest)
-			return
-		} else {
-			f(w, r)
+			confirmInputNote(s.createNote)(w, r)
 		}
 	}
 }
