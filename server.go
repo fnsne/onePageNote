@@ -129,29 +129,27 @@ func (s *OnePageNoteServer) listNote(w http.ResponseWriter, r *http.Request) {
 }
 
 func (s *OnePageNoteServer) note(w http.ResponseWriter, r *http.Request) {
-	if r.Method == http.MethodPost {
-		if requestHasId(r) {
-			fmt.Println("create note")
-			s.createNote(w, r)
-		} else {
-			fmt.Println("update note")
-			s.updateNote(w, r)
-		}
-	} else if r.Method == http.MethodGet {
-		if requestHasId(r) {
-			s.listNote(w, r)
-		} else {
+	if requestHasId(r) {
+		if r.Method == http.MethodGet {
 			s.retrieveNote(w, r)
 		}
-
+		if r.Method == http.MethodPost {
+			s.updateNote(w, r)
+		}
 	} else {
-		w.WriteHeader(http.StatusBadRequest)
+		if r.Method == http.MethodGet {
+			s.listNote(w, r)
+		}
+		if r.Method == http.MethodPost {
+			s.createNote(w, r)
+		}
 	}
+	w.WriteHeader(http.StatusBadRequest)
 }
 
 func requestHasId(r *http.Request) bool {
 	idString := r.URL.Path[len("/api/note/"):]
-	hasId := len(idString) == 0
+	hasId := len(idString) != 0
 	return hasId
 }
 
