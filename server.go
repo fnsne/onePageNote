@@ -22,6 +22,7 @@ type Note struct {
 	Title string
 	Grids []Grid
 }
+
 type OnePageNoteServer struct {
 	store Store
 	http.Handler
@@ -39,6 +40,7 @@ func NewOnePageNoteServer(store Store) *OnePageNoteServer {
 	server.store = store
 	return server
 }
+
 func (s *OnePageNoteServer) homePage(w http.ResponseWriter, r *http.Request) {
 	if r.Method == http.MethodGet {
 		tmp, _ := template.ParseFiles("view/note.html")
@@ -50,6 +52,7 @@ func (s *OnePageNoteServer) homePage(w http.ResponseWriter, r *http.Request) {
 		tmp.Execute(w, currentNoteId)
 	}
 }
+
 func (s *OnePageNoteServer) createNote(w http.ResponseWriter, r *http.Request) {
 	var note Note
 	err := json.NewDecoder(r.Body).Decode(&note)
@@ -68,6 +71,7 @@ func (s *OnePageNoteServer) createNote(w http.ResponseWriter, r *http.Request) {
 	}
 	return
 }
+
 func (s *OnePageNoteServer) updateNote(w http.ResponseWriter, r *http.Request) {
 	idString := r.URL.Path[len("/api/note/"):]
 	id, err := strconv.Atoi(idString)
@@ -94,6 +98,7 @@ func (s *OnePageNoteServer) updateNote(w http.ResponseWriter, r *http.Request) {
 	}
 	return
 }
+
 func (s *OnePageNoteServer) retrieveNote(w http.ResponseWriter, r *http.Request) {
 	idString := r.URL.Path[len("/api/note/"):]
 	id, err := strconv.Atoi(idString)
@@ -109,6 +114,7 @@ func (s *OnePageNoteServer) retrieveNote(w http.ResponseWriter, r *http.Request)
 	}
 	return
 }
+
 func (s *OnePageNoteServer) listNote(w http.ResponseWriter, r *http.Request) {
 	var notes = s.store.GetNoteList()
 	err := json.NewEncoder(w).Encode(notes)
@@ -121,10 +127,10 @@ func (s *OnePageNoteServer) listNote(w http.ResponseWriter, r *http.Request) {
 	}
 	return
 }
+
 func (s *OnePageNoteServer) note(w http.ResponseWriter, r *http.Request) {
 	if r.Method == http.MethodPost {
-		idString := r.URL.Path[len("/api/note/"):]
-		if len(idString) == 0 {
+		if requestHasId(r) {
 			fmt.Println("create note")
 			s.createNote(w, r)
 		} else {
@@ -132,18 +138,21 @@ func (s *OnePageNoteServer) note(w http.ResponseWriter, r *http.Request) {
 			s.updateNote(w, r)
 		}
 	} else if r.Method == http.MethodGet {
-		idString := r.URL.Path[len("/api/note/"):]
-		if len(idString) == 0 {
-			//fmt.Println("list note")
+		if requestHasId(r) {
 			s.listNote(w, r)
 		} else {
-			fmt.Println("retrieve note")
 			s.retrieveNote(w, r)
 		}
 
 	} else {
 		w.WriteHeader(http.StatusBadRequest)
 	}
+}
+
+func requestHasId(r *http.Request) bool {
+	idString := r.URL.Path[len("/api/note/"):]
+	hasId := len(idString) == 0
+	return hasId
 }
 
 type Grid struct {
