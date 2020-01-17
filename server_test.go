@@ -94,6 +94,7 @@ func (suite *ServerTests) serverShouldResponseNoteList(notes []Note) {
 	var resNotes []Note
 	_ = json.NewDecoder(response.Body).Decode(&resNotes)
 	assert.Equal(suite.T(), notes, resNotes)
+	suite.store.AssertCalled(suite.T(), "GetNoteList", notes)
 }
 
 func (suite *ServerTests) serverShouldUpdateNote(note Note) {
